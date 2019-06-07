@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Director_Example' do
+  pod 'Director', :path => '../'
+
+  target 'Director_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
