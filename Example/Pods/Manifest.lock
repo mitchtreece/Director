@@ -1,0 +1,16 @@
+PODS:
+  - Director (0.1.0)
+
+DEPENDENCIES:
+  - Director (from `../`)
+
+EXTERNAL SOURCES:
+  Director:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Director: 243ce9eb7e0b52c5d1c18434678455af97d8d7bc
+
+PODFILE CHECKSUM: 9b70ed37cc9d530e61f142eba42e1ace3c2cc469
+
+COCOAPODS: 1.6.1
