@@ -1,0 +1,53 @@
+//
+//  EmbeddedCoordinator.swift
+//  Director_Example
+//
+//  Created by Mitch Treece on 6/11/19.
+//  Copyright © 2019 CocoaPods. All rights reserved.
+//
+
+import Director
+
+class EmbeddedCoordinator: ViewCoordinator {
+    
+    private var embeddedViewController: EmbeddedViewController!
+    private var redCoordinator = RedCoordinator()
+    private var greenCoordinator = GreenCoordinator()
+    private var blueCoordinator = BlueCoordinator()
+
+    override func build() -> UIViewController {
+        
+        self.embeddedViewController = (UIStoryboard(name: "Embedded", bundle: nil)
+            .instantiateViewController(withIdentifier: "EmbeddedViewController") as! EmbeddedViewController)
+
+        self.embeddedViewController.viewControllers = startChildren()
+        
+        let nav = UINavigationController(rootViewController: self.embeddedViewController)
+        
+        if #available(iOS 13, *) {
+            
+            nav.modalPresentationStyle = Settings.shared.cardPresentation ?
+                .automatic :
+                .fullScreen
+            
+        }
+        
+        return nav
+        
+    }
+    
+    private func startChildren() -> [UIViewController] {
+        
+        self.startEmbedded(child: self.redCoordinator)
+        self.startEmbedded(child: self.greenCoordinator)
+        self.startEmbedded(child: self.blueCoordinator)
+        
+        return [
+            self.redCoordinator.rootViewController,
+            self.greenCoordinator.rootViewController,
+            self.blueCoordinator.rootViewController
+        ]
+        
+    }
+    
+}

@@ -10,6 +10,8 @@ import UIKit
 
 protocol DetailViewControllerDelegate: class {
     func detailViewControllerDidTapPush(_ viewController: DetailViewController)
+    func detailViewControllerDidTapModalPresentation(_ viewController: DetailViewController)
+    func detailViewControllerDidTapModalCoordinator(_ viewController: DetailViewController)
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController)
 }
 
@@ -17,10 +19,15 @@ class DetailViewController: UIViewController {
     
     private weak var delegate: DetailViewControllerDelegate?
     
+    var count: Int = 1 {
+        didSet {
+            self.title = "Detail #\(count)"
+        }
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.random
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "Push",
@@ -38,6 +45,14 @@ class DetailViewController: UIViewController {
     
     @objc private func didTapPush(_ sender: UIBarButtonItem) {
         self.delegate?.detailViewControllerDidTapPush(self)
+    }
+    
+    @IBAction private func didTapModalPresentation(_ sender: UIButton) {
+        self.delegate?.detailViewControllerDidTapModalPresentation(self)
+    }
+    
+    @IBAction private func didTapModalCoordinator(_ sender: UIButton) {
+        self.delegate?.detailViewControllerDidTapModalCoordinator(self)
     }
     
     @IBAction private func didTapFinish(_ sender: UIButton) {

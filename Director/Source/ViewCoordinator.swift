@@ -13,13 +13,16 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         lhs === rhs
     }
     
-    public internal(set) var parentCoordinator: AnyCoordinator!
+    public internal(set) weak var parentCoordinator: AnyCoordinator?
     public internal(set) var rootViewController: UIViewController!
     public internal(set) var navigationController: UINavigationController!
     
     internal var presentationDelegate: ViewCoordinatorPresentationDelegate!
     
     internal private(set) var children = [ViewCoordinator]()
+    
+    private(set) var isEmbedded: Bool = false
+    private(set) var isStarted: Bool = false
     internal var isFinishedAndRemoved: Bool = false
     
     // MARK: Public
@@ -29,10 +32,14 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     }
     
     open func build() -> UIViewController {
-        fatalError("ViewCoordinator must return a view controller")
+        fatalError("ViewCoordinator must return an initial view controller")
     }
     
     open func didStart() {
+        // Override
+    }
+    
+    open func didPopViewController(_ viewController: UIViewController) {
         // Override
     }
     
@@ -40,14 +47,25 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         // Override
     }
     
-    public final func start(child coordinator: ViewCoordinator, animated: Bool = true, embedded: Bool = false) {
+    public final func start(child coordinator: ViewCoordinator, animated: Bool = true) {
+        _start(child: coordinator, animated: animated, embedded: false)
+    }
+    
+    public final func startEmbedded(child coordinator: ViewCoordinator) {
+        _start(child: coordinator, animated: false, embedded: true)
+    }
+    
+    private func _start(child coordinator: ViewCoordinator, animated: Bool, embedded: Bool) {
+        
+        guard !coordinator.isStarted else { return }
+        coordinator.isStarted = true
         
         // Set properties from parent -> child
         
         coordinator.parentCoordinator = self
         coordinator.navigationController = self.navigationController
         coordinator.navigationController.delegate = coordinator.presentationDelegate
-        // coordinator.isEmbedded = embedded
+        coordinator.isEmbedded = embedded
         
         // Set child's root view controller
         
@@ -133,7 +151,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     
     public final func replace(with coordinator: ViewCoordinator, animated: Bool = true) {
         
-        if let sceneCoordinator = self.parentCoordinator as? SceneCoordinator {
+        guard !self.isEmbedded else { return }
+        guard let parent = self.parentCoordinator else { return }
+        
+        if let sceneCoordinator = parent as? SceneCoordinator {
 
             sceneCoordinator.replaceRoot(
                 with: coordinator,
@@ -142,6 +163,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             
         }
         else {
+            
+            let parentViewCoordinator = parent as! ViewCoordinator
+            
+            debugLog("\(parentViewCoordinator.typeString) -+= \(self.typeString), \(coordinator.typeString)")
             
             coordinator.parentCoordinator = self.parentCoordinator
             (self.parentCoordinator as! ViewCoordinator).start(
@@ -222,9 +247,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     
     public final func finish(completion: (()->())? = nil) {
         
+        guard !self.isEmbedded else { return }
         guard !self.isFinishedAndRemoved else { return }
         guard let parent = self.parentCoordinator as? ViewCoordinator else {
-            debugLog("Cannot finish a SceneCoordinator's root ViewCoordinator")
+            debugLog("Cannot finish a SceneCoordinator's root coordinator. Skipping.")
             return
         }
         
@@ -254,11 +280,17 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         guard !coordinator.isFinishedAndRemoved else { return }
         guard let index = self.children.firstIndex(where: { $0 === coordinator }) else { return }
         
-        debugLog("\(self.typeString) -= \(coordinator.typeString)")
-        self.children.remove(at: index)
-        coordinator.isFinishedAndRemoved = true
+        for child in coordinator.children {
+            debugLog("\(coordinator.typeString) -= \(child.typeString)")
+        }
         
-        //        guard !child.isEmbedded else { return }
+        debugLog("\(self.typeString) -= \(coordinator.typeString)")
+        
+        coordinator.isFinishedAndRemoved = true
+        self.children.remove(at: index)
+        
+        guard !coordinator.isEmbedded else { return }
+        
         self.navigationController.delegate = self.presentationDelegate
         
         guard !fromNavigationPop else {

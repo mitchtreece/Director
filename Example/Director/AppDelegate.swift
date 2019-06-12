@@ -7,17 +7,40 @@
 //
 
 import UIKit
+import Director
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    private var window: UIWindow?
+    private var director: Director?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        if #available(iOS 13, *) {
+            
+            // We're on iOS 13 or greater. App related
+            // UI initialization is handled in our SceneDelegate
+            
+        }
+        else {
+            
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            
+            self.director = Director(
+                ExampleSceneCoordinator(),
+                window: self.window!
+            ).start()
+            
+        }
+
         return true
+        
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        // Called when the application is about to terminate.
+        // Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
     // MARK: UISceneSession Lifecycle

@@ -28,7 +28,7 @@ open class SceneCoordinator: AnyCoordinator {
     }
     
     open func build() -> ViewCoordinator {
-        fatalError("SceneCoordinator must return an initial ViewCoordinator")
+        fatalError("SceneCoordinator must return an initial coordinator")
     }
     
     // MARK: Private
@@ -44,8 +44,10 @@ open class SceneCoordinator: AnyCoordinator {
     internal func replaceRoot(with coordinator: ViewCoordinator, animated: Bool = true) {
         
         guard let viewController = UIViewController.root(in: coordinator.build()) else {
-            fatalError("Failed to load root view controller")
+            fatalError("SceneCoordinator failed to load replacement coordinator's root view controller")
         }
+        
+        debugLog("\(self.typeString) -+= \(self.rootCoordinator.typeString), \(coordinator.typeString)")
         
         coordinator.parentCoordinator = self
         coordinator.navigationController = self.navigationController

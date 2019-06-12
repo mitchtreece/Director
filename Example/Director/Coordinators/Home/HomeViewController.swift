@@ -11,11 +11,13 @@ import UIKit
 protocol HomeViewControllerDelegate: class {
     func homeViewControllerDidTapSwiftUI(_ viewController: HomeViewController)
     func homeViewControllerDidTapDetail(_ viewController: HomeViewController)
-    func homeViewControllerDidTapModalCoordinator(_ viewController: HomeViewController, cardPresentation: Bool)
+    func homeViewControllerDidTapModalCoordinator(_ viewController: HomeViewController)
+    func homeViewControllerDidTapEmbeddedCoordinator(_ viewController: HomeViewController)
 }
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet private weak var settingsLabel: UILabel!
     @IBOutlet private weak var modalCardsContentView: UIView!
     @IBOutlet private weak var modalCardsSwitch: UISwitch!
     
@@ -34,16 +36,36 @@ class HomeViewController: UIViewController {
                 action: #selector(didTapSwiftUI(_:))
             )
             
+            self.modalCardsSwitch.addTarget(
+                self,
+                action: #selector(modalCardsSwitchValueChanged(_:)),
+                for: .valueChanged
+            )
+            
         }
         else {
+            
+            self.settingsLabel.isHidden = true
             self.modalCardsContentView.isHidden = true
+            
         }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.modalCardsSwitch.isOn = Settings.shared.cardPresentation
         
     }
     
     func setup(delegate: HomeViewControllerDelegate) -> Self {
         self.delegate = delegate
         return self
+    }
+    
+    @objc private func modalCardsSwitchValueChanged(_ sender: UISwitch) {
+        Settings.shared.cardPresentation = sender.isOn
     }
     
     @objc private func didTapSwiftUI(_ sender: UIBarButtonItem) {
@@ -55,7 +77,11 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction private func didTapModalCoordinator(_ sender: UIButton) {
-        self.delegate?.homeViewControllerDidTapModalCoordinator(self, cardPresentation: self.modalCardsSwitch.isOn)
+        self.delegate?.homeViewControllerDidTapModalCoordinator(self)
+    }
+    
+    @IBAction private func didTapEmbeddedCoordinator(_ sender: UIButton) {
+        self.delegate?.homeViewControllerDidTapEmbeddedCoordinator(self)
     }
     
 }

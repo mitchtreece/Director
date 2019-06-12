@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol AnyCoordinator {
+public protocol AnyCoordinator: class {
     //
 }
 

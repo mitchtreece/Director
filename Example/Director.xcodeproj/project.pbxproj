@@ -14,6 +14,14 @@
 		2622898522AC623E003E98BE /* DetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622898422AC623E003E98BE /* DetailCoordinator.swift */; };
 		2622898722AC6248003E98BE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622898622AC6248003E98BE /* DetailViewController.swift */; };
 		2622898922AC6437003E98BE /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2622898822AC6437003E98BE /* UIColor+Random.swift */; };
+		2630348C22AF594E008F7E52 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630348B22AF594E008F7E52 /* Settings.swift */; };
+		2630348F22B0936A008F7E52 /* Embedded.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2630348E22B0936A008F7E52 /* Embedded.storyboard */; };
+		2630349122B09386008F7E52 /* EmbeddedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630349022B09386008F7E52 /* EmbeddedCoordinator.swift */; };
+		2630349322B09393008F7E52 /* EmbeddedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630349222B09393008F7E52 /* EmbeddedViewController.swift */; };
+		2630349922B09C2D008F7E52 /* RedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630349822B09C2D008F7E52 /* RedCoordinator.swift */; };
+		2630349B22B0C838008F7E52 /* EmbeddedChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630349A22B0C838008F7E52 /* EmbeddedChildViewController.swift */; };
+		2630349D22B0CC9A008F7E52 /* GreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630349C22B0CC9A008F7E52 /* GreenCoordinator.swift */; };
+		2630349F22B0CCB9008F7E52 /* BlueCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2630349E22B0CCB8008F7E52 /* BlueCoordinator.swift */; };
 		2633E3E522AE0B0900D02E95 /* Modal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2633E3E422AE0B0900D02E95 /* Modal.storyboard */; };
 		2633E3E722AE0B1300D02E95 /* ModalCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E3E622AE0B1300D02E95 /* ModalCoordinator.swift */; };
 		2633E3E922AE0B1D00D02E95 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2633E3E822AE0B1D00D02E95 /* ModalViewController.swift */; };
@@ -49,6 +57,14 @@
 		2622898422AC623E003E98BE /* DetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCoordinator.swift; sourceTree = "<group>"; };
 		2622898622AC6248003E98BE /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2622898822AC6437003E98BE /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
+		2630348B22AF594E008F7E52 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2630348E22B0936A008F7E52 /* Embedded.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Embedded.storyboard; sourceTree = "<group>"; };
+		2630349022B09386008F7E52 /* EmbeddedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedCoordinator.swift; sourceTree = "<group>"; };
+		2630349222B09393008F7E52 /* EmbeddedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedViewController.swift; sourceTree = "<group>"; };
+		2630349822B09C2D008F7E52 /* RedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedCoordinator.swift; sourceTree = "<group>"; };
+		2630349A22B0C838008F7E52 /* EmbeddedChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedChildViewController.swift; sourceTree = "<group>"; };
+		2630349C22B0CC9A008F7E52 /* GreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenCoordinator.swift; sourceTree = "<group>"; };
+		2630349E22B0CCB8008F7E52 /* BlueCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueCoordinator.swift; sourceTree = "<group>"; };
 		2633E3E422AE0B0900D02E95 /* Modal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Modal.storyboard; sourceTree = "<group>"; };
 		2633E3E622AE0B1300D02E95 /* ModalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalCoordinator.swift; sourceTree = "<group>"; };
 		2633E3E822AE0B1D00D02E95 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +136,20 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		2630348D22B09352008F7E52 /* Embedded */ = {
+			isa = PBXGroup;
+			children = (
+				2630348E22B0936A008F7E52 /* Embedded.storyboard */,
+				2630349022B09386008F7E52 /* EmbeddedCoordinator.swift */,
+				2630349222B09393008F7E52 /* EmbeddedViewController.swift */,
+				2630349A22B0C838008F7E52 /* EmbeddedChildViewController.swift */,
+				2630349822B09C2D008F7E52 /* RedCoordinator.swift */,
+				2630349C22B0CC9A008F7E52 /* GreenCoordinator.swift */,
+				2630349E22B0CCB8008F7E52 /* BlueCoordinator.swift */,
+			);
+			path = Embedded;
+			sourceTree = "<group>";
+		};
 		2633E3E322AE0AF900D02E95 /* Modal */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +160,14 @@
 			path = Modal;
 			sourceTree = "<group>";
 		};
+		2635914822AF5176009FB59A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2622898822AC6437003E98BE /* UIColor+Random.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		263988DA22AADE270042404A /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +175,7 @@
 				263988DB22AADE490042404A /* Home */,
 				2622898122AC61EE003E98BE /* Detail */,
 				2633E3E322AE0AF900D02E95 /* Modal */,
+				2630348D22B09352008F7E52 /* Embedded */,
 				2622897B22AAF119003E98BE /* SwiftUI */,
 			);
 			path = Coordinators;
@@ -199,8 +238,9 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				263988D622AA39F40042404A /* SceneDelegate.swift */,
-				2622898822AC6437003E98BE /* UIColor+Random.swift */,
+				2630348B22AF594E008F7E52 /* Settings.swift */,
 				263988DA22AADE270042404A /* Coordinators */,
+				2635914822AF5176009FB59A /* Helpers */,
 				263988E222AAEE160042404A /* Resources */,
 			);
 			name = "Example for Director";
@@ -332,6 +372,7 @@
 			files = (
 				263988DF22AADF640042404A /* Home.storyboard in Resources */,
 				2633E3E522AE0B0900D02E95 /* Modal.storyboard in Resources */,
+				2630348F22B0936A008F7E52 /* Embedded.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 				2622898322AC622B003E98BE /* Detail.storyboard in Resources */,
@@ -422,15 +463,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				2622898922AC6437003E98BE /* UIColor+Random.swift in Sources */,
+				2630349F22B0CCB9008F7E52 /* BlueCoordinator.swift in Sources */,
 				2633E3E722AE0B1300D02E95 /* ModalCoordinator.swift in Sources */,
+				2630349D22B0CC9A008F7E52 /* GreenCoordinator.swift in Sources */,
+				2630349322B09393008F7E52 /* EmbeddedViewController.swift in Sources */,
+				2630348C22AF594E008F7E52 /* Settings.swift in Sources */,
 				2622898722AC6248003E98BE /* DetailViewController.swift in Sources */,
 				263988E122AADF720042404A /* HomeViewController.swift in Sources */,
 				2633E3E922AE0B1D00D02E95 /* ModalViewController.swift in Sources */,
 				2622898522AC623E003E98BE /* DetailCoordinator.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				2630349122B09386008F7E52 /* EmbeddedCoordinator.swift in Sources */,
 				2622898022AAF16A003E98BE /* SwiftHomeView.swift in Sources */,
 				263988DD22AADE560042404A /* HomeCoordinator.swift in Sources */,
+				2630349B22B0C838008F7E52 /* EmbeddedChildViewController.swift in Sources */,
 				2622897E22AAF15F003E98BE /* SwiftHomeCoordinator.swift in Sources */,
+				2630349922B09C2D008F7E52 /* RedCoordinator.swift in Sources */,
 				263988D922AADE0C0042404A /* ExampleSceneCoordinator.swift in Sources */,
 				263988D722AA39F40042404A /* SceneDelegate.swift in Sources */,
 			);

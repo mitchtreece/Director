@@ -42,14 +42,23 @@ internal class ViewCoordinatorPresentationDelegate: NSObject, UINavigationContro
         guard let sourceViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
         guard !navigationController.viewControllers.contains(sourceViewController) else { return }
         
-        // Are we popping the coordinator's initial view controller?
-        
-        guard sourceViewController == coordinator.rootViewController else { return }
-        
-        // Remove self from parent without attempting to dismiss the view controller
-        
-        (coordinator.parentCoordinator as? ViewCoordinator)?
-            .removeForNavigationPop(child: coordinator)
+        if sourceViewController != coordinator.rootViewController {
+            
+            // Tell the coordinator we're popping a view controller if it
+            // isn't the coordinator's root view controller
+            
+            coordinator.didPopViewController(sourceViewController)
+            
+        }
+        else {
+            
+            // We're popping the coordinator's root view controller.
+            // Remove self from parent without attempting to dismiss the view controller
+            
+            (coordinator.parentCoordinator as? ViewCoordinator)?
+                .removeForNavigationPop(child: coordinator)
+            
+        }
         
     }
     

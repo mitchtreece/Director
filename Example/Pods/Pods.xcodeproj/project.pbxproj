@@ -12,7 +12,6 @@
 		263988D122AA33180042404A /* UINavigationController+Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988D022AA33180042404A /* UINavigationController+Director.swift */; };
 		263988EC22AAEF640042404A /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E422AAEF640042404A /* Director.swift */; };
 		263988ED22AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E522AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift */; };
-		263988EE22AAEF640042404A /* CoordinatorStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E622AAEF640042404A /* CoordinatorStack.swift */; };
 		263988EF22AAEF640042404A /* ViewCoordinator+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E722AAEF640042404A /* ViewCoordinator+Navigation.swift */; };
 		263988F022AAEF640042404A /* ViewCoordinator+Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E822AAEF640042404A /* ViewCoordinator+Modal.swift */; };
 		263988F122AAEF640042404A /* SceneCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E922AAEF640042404A /* SceneCoordinator.swift */; };
@@ -53,7 +52,6 @@
 		263988D022AA33180042404A /* UINavigationController+Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Director.swift"; sourceTree = "<group>"; };
 		263988E422AAEF640042404A /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		263988E522AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCoordinatorPresentationDelegate.swift; sourceTree = "<group>"; };
-		263988E622AAEF640042404A /* CoordinatorStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinatorStack.swift; sourceTree = "<group>"; };
 		263988E722AAEF640042404A /* ViewCoordinator+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewCoordinator+Navigation.swift"; sourceTree = "<group>"; };
 		263988E822AAEF640042404A /* ViewCoordinator+Modal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewCoordinator+Modal.swift"; sourceTree = "<group>"; };
 		263988E922AAEF640042404A /* SceneCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCoordinator.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 				263988E822AAEF640042404A /* ViewCoordinator+Modal.swift */,
 				263988E722AAEF640042404A /* ViewCoordinator+Navigation.swift */,
 				263988E522AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift */,
-				263988E622AAEF640042404A /* CoordinatorStack.swift */,
 				263988CD22AA32D20042404A /* Helpers */,
 			);
 			name = Source;
@@ -416,7 +413,6 @@
 				263988F322AAEF640042404A /* ViewCoordinator.swift in Sources */,
 				263988F122AAEF640042404A /* SceneCoordinator.swift in Sources */,
 				2BF46F9523CDDE3BB1A98969AC677C72 /* Director-dummy.m in Sources */,
-				263988EE22AAEF640042404A /* CoordinatorStack.swift in Sources */,
 				263988F222AAEF640042404A /* AnyCoordinator.swift in Sources */,
 				263988EC22AAEF640042404A /* Director.swift in Sources */,
 				263988EF22AAEF640042404A /* ViewCoordinator+Navigation.swift in Sources */,

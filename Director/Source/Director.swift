@@ -18,7 +18,7 @@ public class Director {
             return nav
         }
         
-        fatalError("Director's managed window must contain a navigation controller")
+        fatalError("Director's managed window must have a navigation controller at its root")
         
     }
     
@@ -48,7 +48,7 @@ public class Director {
         coordinator.rootViewController = viewController
         
         guard let rootViewController = UIViewController.root(in: viewController) else {
-            fatalError("Failed to load root view controller")
+            fatalError("Director failed to load the scene coordinator's initial child view controller")
         }
         
         self.navigationController.setViewControllers([rootViewController], animated: false)

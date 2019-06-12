@@ -35,8 +35,12 @@ extension HomeCoordinator: HomeViewControllerDelegate {
         start(child: DetailCoordinator())
     }
     
-    func homeViewControllerDidTapModalCoordinator(_ viewController: HomeViewController, cardPresentation: Bool) {
-        start(child: ModalCoordinator(cardPresentation: cardPresentation))
+    func homeViewControllerDidTapModalCoordinator(_ viewController: HomeViewController) {
+        start(child: ModalCoordinator())
+    }
+    
+    func homeViewControllerDidTapEmbeddedCoordinator(_ viewController: HomeViewController) {
+        start(child: EmbeddedCoordinator())
     }
     
 }

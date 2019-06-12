@@ -10,17 +10,7 @@ import UIKit
 import Director
 
 class ModalCoordinator: ViewCoordinator {
-    
-    private var cardPresentation: Bool
-    
-    init(cardPresentation: Bool) {
-        self.cardPresentation = cardPresentation
-    }
-    
-    required init() {
-        fatalError("init() has not been implemented")
-    }
-    
+
     override func build() -> UIViewController {
         
         let vc = (UIStoryboard(name: "Modal", bundle: nil)
@@ -31,7 +21,7 @@ class ModalCoordinator: ViewCoordinator {
         
         if #available(iOS 13, *) {
             
-            nav.modalPresentationStyle = self.cardPresentation ?
+            nav.modalPresentationStyle = Settings.shared.cardPresentation ?
                 .automatic :
                 .fullScreen
             

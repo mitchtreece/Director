@@ -11,16 +11,26 @@ import Director
 
 class DetailCoordinator: ViewCoordinator {
     
+    private var pushCount: Int = 1
+    
     override func build() -> UIViewController {
         return createDetail()
     }
     
     private func createDetail() -> DetailViewController {
         
-        return (UIStoryboard(name: "Detail", bundle: nil)
+        let vc = (UIStoryboard(name: "Detail", bundle: nil)
             .instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController)
             .setup(delegate: self)
         
+        vc.count = self.pushCount
+        self.pushCount += 1
+        return vc
+        
+    }
+    
+    override func didPopViewController(_ viewController: UIViewController) {
+        self.pushCount -= 1
     }
     
 }
@@ -28,10 +38,28 @@ class DetailCoordinator: ViewCoordinator {
 extension DetailCoordinator: DetailViewControllerDelegate {
     
     func detailViewControllerDidTapPush(_ viewController: DetailViewController) {
+        push(createDetail())
+    }
+    
+    func detailViewControllerDidTapModalPresentation(_ viewController: DetailViewController) {
         
-        let vc = createDetail()
-        push(vc)
+        let vc = UIStoryboard(name: "Modal", bundle: nil).instantiateViewController(withIdentifier: "ModalViewController")
+        let nav = UINavigationController(rootViewController: vc)
         
+        if #available(iOS 13, *) {
+            
+            nav.modalPresentationStyle = Settings.shared.cardPresentation ?
+                .automatic :
+                .fullScreen
+            
+        }
+        
+        modal(nav)
+        
+    }
+    
+    func detailViewControllerDidTapModalCoordinator(_ viewController: DetailViewController) {
+        start(child: ModalCoordinator())
     }
     
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController) {

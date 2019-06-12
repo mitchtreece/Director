@@ -34,7 +34,19 @@ class ModalViewController: UIViewController {
     }
     
     @objc private func didTapDone(_ sender: UIBarButtonItem) {
-        self.delegate?.modalViewControllerDidTapDone(self)
+        
+        if let delegate = self.delegate {
+            delegate.modalViewControllerDidTapDone(self)
+        }
+        else {
+            
+            self.dismiss(
+                animated: true,
+                completion: nil
+            )
+            
+        }
+        
     }
     
 }
