@@ -7,9 +7,22 @@
 
 import UIKit
 
+/**
+ A scene coordinator base class.
+ 
+ ```
+ class ExampleSceneCoordinator: SceneCoordinator {
+ 
+    override func build() -> ViewCoordinator {
+        return RootCoordinator()
+    }
+ 
+ }
+ ```
+ */
 open class SceneCoordinator: AnyCoordinator {
     
-    internal weak var director: Director!
+    internal weak var director: SceneDirector!
     
     private var window: UIWindow {
         return self.director.window
@@ -27,6 +40,12 @@ open class SceneCoordinator: AnyCoordinator {
         //
     }
     
+    /// Builds the scene coordinator's root view coordinator.
+    /// This should be overriden by subclasses to return a custom view coordinator.
+    ///
+    /// This should **never** be called directly.
+    ///
+    /// - Returns: A `ViewCoordinator` instance.
     open func build() -> ViewCoordinator {
         fatalError("SceneCoordinator must return an initial coordinator")
     }

@@ -12,8 +12,8 @@ import Director
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    private var window: UIWindow?
-    private var director: Director?
+    var window: UIWindow?
+    private var director: SceneDirector?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             self.window = UIWindow(frame: UIScreen.main.bounds)
             
-            self.director = Director(
+            self.director = SceneDirector(
                 ExampleSceneCoordinator(),
                 window: self.window!
             ).start()

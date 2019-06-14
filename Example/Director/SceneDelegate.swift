@@ -13,7 +13,7 @@ import Director
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    private var director: Director!
+    private var director: SceneDirector!
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
-        self.director = Director(
+        self.director = SceneDirector(
             ExampleSceneCoordinator(),
             window: self.window!
         ).start()

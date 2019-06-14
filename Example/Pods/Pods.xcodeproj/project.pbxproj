@@ -10,7 +10,7 @@
 		235A789100A68D4E49435EBBBA07074C /* Pods-Director_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EECCB9B52C76176FFA29F38E0A52BE62 /* Pods-Director_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		263988CF22AA32F40042404A /* UIViewController+Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988CE22AA32F40042404A /* UIViewController+Director.swift */; };
 		263988D122AA33180042404A /* UINavigationController+Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988D022AA33180042404A /* UINavigationController+Director.swift */; };
-		263988EC22AAEF640042404A /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E422AAEF640042404A /* Director.swift */; };
+		263988EC22AAEF640042404A /* SceneDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E422AAEF640042404A /* SceneDirector.swift */; };
 		263988ED22AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E522AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift */; };
 		263988EF22AAEF640042404A /* ViewCoordinator+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E722AAEF640042404A /* ViewCoordinator+Navigation.swift */; };
 		263988F022AAEF640042404A /* ViewCoordinator+Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E822AAEF640042404A /* ViewCoordinator+Modal.swift */; };
@@ -50,7 +50,7 @@
 		1AEAFA4DA71F2B5170CD491CB08F1DC5 /* Pods-Director_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Director_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		263988CE22AA32F40042404A /* UIViewController+Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Director.swift"; sourceTree = "<group>"; };
 		263988D022AA33180042404A /* UINavigationController+Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Director.swift"; sourceTree = "<group>"; };
-		263988E422AAEF640042404A /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
+		263988E422AAEF640042404A /* SceneDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDirector.swift; sourceTree = "<group>"; };
 		263988E522AAEF640042404A /* ViewCoordinatorPresentationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCoordinatorPresentationDelegate.swift; sourceTree = "<group>"; };
 		263988E722AAEF640042404A /* ViewCoordinator+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewCoordinator+Navigation.swift"; sourceTree = "<group>"; };
 		263988E822AAEF640042404A /* ViewCoordinator+Modal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewCoordinator+Modal.swift"; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		263988E322AAEEC70042404A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				263988E422AAEF640042404A /* Director.swift */,
+				263988E422AAEF640042404A /* SceneDirector.swift */,
 				263988EA22AAEF640042404A /* AnyCoordinator.swift */,
 				263988E922AAEF640042404A /* SceneCoordinator.swift */,
 				263988EB22AAEF640042404A /* ViewCoordinator.swift */,
@@ -368,6 +368,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 10E10F9E109FB0EBEAE9EA02BF888F47 /* Products */;
@@ -414,7 +415,7 @@
 				263988F122AAEF640042404A /* SceneCoordinator.swift in Sources */,
 				2BF46F9523CDDE3BB1A98969AC677C72 /* Director-dummy.m in Sources */,
 				263988F222AAEF640042404A /* AnyCoordinator.swift in Sources */,
-				263988EC22AAEF640042404A /* Director.swift in Sources */,
+				263988EC22AAEF640042404A /* SceneDirector.swift in Sources */,
 				263988EF22AAEF640042404A /* ViewCoordinator+Navigation.swift in Sources */,
 				263988D122AA33180042404A /* UINavigationController+Director.swift in Sources */,
 				263988F022AAEF640042404A /* ViewCoordinator+Modal.swift in Sources */,
@@ -517,7 +518,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -772,7 +773,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

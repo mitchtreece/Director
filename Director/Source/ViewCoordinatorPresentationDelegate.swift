@@ -22,7 +22,7 @@ internal class ViewCoordinatorPresentationDelegate: NSObject, UINavigationContro
     func viewControllerIsBeingDismissed(_ viewController: UIViewController) {
         
         guard let coordinator = self.coordinator, self.isEnabled else { return }
-        guard !coordinator.isFinishedAndRemoved else { return }
+        guard !coordinator.isFinished else { return }
         
         (coordinator.parentCoordinator as? ViewCoordinator)?
             .removeForModalDismiss(child: coordinator)

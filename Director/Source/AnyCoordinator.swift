@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Protocol describing the base attributes of a coordinator.
 public protocol AnyCoordinator: class {
     //
 }

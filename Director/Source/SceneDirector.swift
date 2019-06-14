@@ -1,5 +1,5 @@
 //
-//  Director.swift
+//  SceneDirector.swift
 //  Director
 //
 //  Created by Mitch Treece on 6/6/19.
@@ -7,11 +7,60 @@
 
 import UIKit
 
-public class Director {
+/**
+ An application scene director.
+ 
+ A scene director is created in an application's `AppDelegate` or `SceneDelegate`, depending on the target OS version.
+ It manages properties related to the scene's window & initial view coordinator presentation.
+ 
+ ```
+ @UIApplicationMain
+ class AppDelegate: UIResponder, UIApplicationDelegate {
+ 
+    var window: UIWindow?
+    private var director: SceneDirector!
+ 
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+ 
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+ 
+        self.director = SceneDirector(
+            ExampleSceneCoordinator(),
+            window: self.window!
+        ).start()
+ 
+    }
+ 
+ }
+ ```
+ ```
+ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+ 
+    var window: UIWindow?
+    private var director: SceneDirector!
+ 
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+ 
+        guard let _ = (scene as? UIWindowScene) else { return }
+ 
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+ 
+        self.director = Director(
+            ExampleSceneCoordinator(),
+            window: self.window!
+        ).start()
+ 
+    }
+ 
+ }
+ ```
+ */
+public final class SceneDirector {
     
     internal private(set) var window: UIWindow
     private var sceneCoordinator: SceneCoordinator
     
+    /// The scene director's managed navigation controller.
     public var navigationController: UINavigationController {
         
         if let nav = self.window.rootViewController as? UINavigationController {
@@ -21,7 +70,10 @@ public class Director {
         fatalError("Director's managed window must have a navigation controller at its root")
         
     }
-    
+
+    /// Initializes a scene director with a scene coordinator & window.
+    /// - Parameter coordinator: The scene director's root scene coordinator.
+    /// - Parameter window: The scene director's managed window.
     public init(_ coordinator: SceneCoordinator, window: UIWindow) {
         
         self.window = window
@@ -38,6 +90,8 @@ public class Director {
         
     }
     
+    /// Starts the scene director.
+    /// - Returns: This scene director instance.
     public final func start() -> Self {
         
         let coordinator = self.sceneCoordinator.buildForDirector()

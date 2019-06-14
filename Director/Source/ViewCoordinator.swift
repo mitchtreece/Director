@@ -7,23 +7,89 @@
 
 import UIKit
 
+/**
+ A view coordinator base class.
+ 
+ View coordinator's manage view controller display state & presentation.
+ They're used to define a scene's navigation flow in chunks;
+ while keeping navigation & presentation logic separate from app & view logic.
+ 
+ A view coordinator should manage the navigation of _only_ what it's concerned with.
+ Multiple view coordinators can live in a single navigation stack, each managing a slice of view controllers in the stack.
+ Likewise, a view coordinator can be associated with as many (or as few) view controllers as needed.
+ 
+ ```
+ class GreenCoordinator: ViewCoordinator {
+ 
+    override func build() -> UIViewController {
+ 
+        let vc = GreenViewController()
+        vc.delegate = self
+        return vc
+ 
+    }
+ 
+ }
+ 
+ extension GreenCoordinator: GreenViewControllerDelegate {
+ 
+    func didTapDone(_ sender: UIButton) {
+        finish()
+    }
+ 
+ }
+ ```
+ ```
+ class RedCoordinator: ViewCoordinator {
+ 
+    override func build() -> UIViewController {
+ 
+        let vc = RedViewController()
+        vc.delegate = self
+        return vc
+ 
+    }
+ 
+ }
+ 
+ extension RedCoordinator: RedViewControllerDelegate {
+ 
+    func didTapGreen(_ sender: UIButton) {
+ 
+        let coordinator = GreenCoordinator()
+        start(child: coordinator)
+ 
+    }
+ 
+ }
+ ```
+ */
 open class ViewCoordinator: AnyCoordinator, Equatable {
     
     public static func == (lhs: ViewCoordinator, rhs: ViewCoordinator) -> Bool {
         lhs === rhs
     }
     
+    /// The view coordinator's parent coordinator.
     public internal(set) weak var parentCoordinator: AnyCoordinator?
+    
+    /// The view coordinator's root view controller.
     public internal(set) var rootViewController: UIViewController!
+    
+    /// The view coordinator's managed navigation controller.
     public internal(set) var navigationController: UINavigationController!
     
     internal var presentationDelegate: ViewCoordinatorPresentationDelegate!
-    
     internal private(set) var children = [ViewCoordinator]()
     
+    /// Flag indicating if the view coordinator is embedded in a parent view coordinator.
     private(set) var isEmbedded: Bool = false
+    
+    /// Flag indicating if the view coordinator has been started.
     private(set) var isStarted: Bool = false
-    internal var isFinishedAndRemoved: Bool = false
+    
+    /// Flag indicating if the view coordinator has been finished.
+    public internal(set) var isFinished: Bool = false
     
     // MARK: Public
     
@@ -31,26 +97,64 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         self.presentationDelegate = ViewCoordinatorPresentationDelegate(coordinator: self)
     }
     
+    /// Builds a view coordinator's root view controller.
+    /// Called by a parent coordinator while starting a child.
+    /// This should be overriden by subclasses to return a custom view controller.
+    ///
+    /// If a `UIViewController` instance is returned from this function, the parent coordinator
+    /// will start & push onto it's existing navigation stack. However, if a `UINavigationController`
+    /// instance is returned, the parent will treat this child as being self-managed, and present the
+    /// returned navigation controller modally.
+    ///
+    /// This should **never** be called directly.
+    ///
+    /// - Returns: A `UIViewController` instance.
     open func build() -> UIViewController {
         fatalError("ViewCoordinator must return an initial view controller")
     }
     
+    /// Called after the view coordinator has been started & added to it's parent coordinator.
+    /// Override this function to perform additional setup if needed.
     open func didStart() {
-        // Override
+        // Override me
     }
     
+    /// Called when the view coordinator's managed navigation controller pops a view controller.
+    /// Override this function to perform additional actions if needed.
     open func didPopViewController(_ viewController: UIViewController) {
-        // Override
+        // Override me
     }
     
+    /// Called after the view coordinator has been finished & removed from it's parent coordinator.
+    /// Override this function to perform additional cleanup if needed.
     open func didFinish() {
-        // Override
+        // Override me
     }
     
+    /**
+     Starts, adds, & presents a child coordinator.
+     
+     If the child coordinator is embedded, it will still be added to the child coordinator stack,
+     but it **will not** be presented. An embedded coordinator manages it's own presentation / dismissal.
+     
+     - Parameter coordinator: The child coordinator.
+     - Parameter animated: Flag indicating if the coordinator should start with an animation; _defaults to true_.
+     - Parameter embedded: Flag indicating if the coordinator is going to be manually embedded in it's parent; _defaults to false_.
+     */
+    
+    /// Starts & presents a child view coordinator.
+    /// - Parameter: coordinator: The child view coordinator.
+    /// - Parameter animated: Flag indicating if the view coordinator should be started with an animation; _defaults to true_.
     public final func start(child coordinator: ViewCoordinator, animated: Bool = true) {
         _start(child: coordinator, animated: animated, embedded: false)
     }
     
+    /// Starts an embedded child view coordinator.
+    ///
+    /// The child view coordinator will still be added to the receiver's coordinator stack,
+    /// but it **will not** be presented. Embedded view coordinators manage their own presentation & dismissal.
+    ///
+    /// - Parameter coordinator: The child view coordinator.
     public final func startEmbedded(child coordinator: ViewCoordinator) {
         _start(child: coordinator, animated: false, embedded: true)
     }
@@ -148,7 +252,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         coordinator.didStart()
         
     }
-    
+
+    /// Replaces the receiving view coordinator with another in the same parent coordinator.
+    /// - Parameter coordinator: The replacement view coordinator.
+    /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
     public final func replace(with coordinator: ViewCoordinator, animated: Bool = true) {
         
         guard !self.isEmbedded else { return }
@@ -245,10 +352,18 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     //
     //    }
     
+    /// Removes the view coordinator from its parent's coordinator stack,
+    /// & dismisses it the same way it was presented.
+    ///
+    /// If the view coordinator is embedded, it will still be removed from its parent's coordinator stack,
+    /// but it **will not** be dismissed. An embedded view coordinator manages its own presentation & dismissal.
+    ///
+    /// - Parameter completion: An optional completion handler to call after the view coordinator finishes; _defaults to nil_.
     public final func finish(completion: (()->())? = nil) {
         
         guard !self.isEmbedded else { return }
-        guard !self.isFinishedAndRemoved else { return }
+        guard !self.isFinished else { return }
+        
         guard let parent = self.parentCoordinator as? ViewCoordinator else {
             debugLog("Cannot finish a SceneCoordinator's root coordinator. Skipping.")
             return
@@ -277,7 +392,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
                         fromNavigationPop: Bool = false,
                         completion: (()->())? = nil) {
         
-        guard !coordinator.isFinishedAndRemoved else { return }
+        guard !coordinator.isFinished else { return }
         guard let index = self.children.firstIndex(where: { $0 === coordinator }) else { return }
         
         for child in coordinator.children {
@@ -286,7 +401,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
         debugLog("\(self.typeString) -= \(coordinator.typeString)")
         
-        coordinator.isFinishedAndRemoved = true
+        coordinator.isFinished = true
         self.children.remove(at: index)
         
         guard !coordinator.isEmbedded else { return }
