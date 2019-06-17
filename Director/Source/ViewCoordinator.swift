@@ -159,6 +159,16 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         _start(child: coordinator, animated: false, embedded: true)
     }
     
+    /// Starts a collection of embedded child view coordinators.
+    ///
+    /// The child view coordinators will still be added to the receiver's coordinator stack,
+    /// but they **will not** be presented. Embedded view coordinators manage their own presentation & dismissal.
+    ///
+    /// - Parameter children: The child view coordinators.
+    public final func startEmbedded(children: [ViewCoordinator]) {
+        children.forEach { self._start(child: $0, animated: false, embedded: true) }
+    }
+    
     private func _start(child coordinator: ViewCoordinator, animated: Bool, embedded: Bool) {
         
         guard !coordinator.isStarted else { return }

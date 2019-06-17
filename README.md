@@ -11,16 +11,9 @@ Director is a lightweight coordinator library written for Swift. 🎬
 
 ## Installation
 ### CocoaPods
-Director is integrated with CocoaPods!
-
-1. Add the following to your `Podfile`:
 ```
-use_frameworks!
 pod 'Director', '~> 1.0'
 ```
-2. In your project directory, run `pod install`
-3. Import the `Director` module wherever you need it
-4. Profit
 
 ### Swift Package Manager
 TODO
@@ -34,9 +27,12 @@ Likewise, a coordinator can be associated with as many (or as few) views as need
 TODO: COORDINATOR NAVIGATION FLOW CHART
 
 ## Director
-- TODO: Overview
-- TODO: Don't use main storyboard
-- TODO: ...
+Director is a lightweight coordinator implementation that helps keep your application's navigation paths simple & reusable.
+The library consists of three main components:
+
+- `SceneDirector`
+- `SceneCoordinator`
+- `ViewCoordinator`
 
 ### SceneDirector
 `SceneDirector` is an application-level class that manages a scene's window & initial view coordinator presentation.
@@ -88,6 +84,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 ```
 
+**NOTE:** You might have noticed we initialized our window manually in the above example. Because our `SceneDirector` manages our window and initial
+view presentation, we _do not_ use a main storyboard. You can simply remove the storyboard file added to your project by default, and clear the "Main Interface" field in your target settings. You can continue using storyboards for your other view elements if desired. Simply load them directly from
+your view coordinator subclasses.
+
 ### SceneCoordinator
 `SceneCoordinator` is a root-level class that manages the initial view coordinator displayed by an application.
 This should be subclassed to return an appropriate `ViewCoordinator` instance when your application launches.
@@ -103,8 +103,7 @@ class ExampleSceneCoordinator: SceneCoordinator {
 ```
 
 ### ViewCoordinator
-`ViewCoordinator` is a class that manages the display state, navigation path, & presentation / dismissal logic for a
-set of related views.
+`ViewCoordinator` is a class that manages the display state, navigation path, & presentation / dismissal logic for a set of related views.
 
 ```
 class HomeCoordinator: ViewCoordinator {
@@ -188,9 +187,11 @@ class TabCoordinator {
 
     private func buildChildren() -> [UIViewController] {
 
-        self.startEmbedded(child: self.redCoordinator)
-        self.startEmbedded(child: self.greenCoordinator)
-        self.startEmbedded(child: self.blueCoordinator)
+        startEmbedded(children: [
+            self.redCoordinator,
+            self.greenCoordinator,
+            self.blueCoordinator
+        ])
 
         return [
             self.redCoordinator.rootViewController,
@@ -203,7 +204,7 @@ class TabCoordinator {
 }
 ```
 
-By calling `startEmbedded(child:)`, the child view coordinators are setup without any automatic presentation logic.
+By calling `startEmbedded(child:)` or `startEmbedded(children:)`, the child view coordinators are setup without any automatic presentation logic.
 This is ideal when building custom multi-view interfaces.
 
 ---

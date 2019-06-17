@@ -38,9 +38,11 @@ class EmbeddedCoordinator: ViewCoordinator {
     
     private func startChildren() -> [UIViewController] {
         
-        self.startEmbedded(child: self.redCoordinator)
-        self.startEmbedded(child: self.greenCoordinator)
-        self.startEmbedded(child: self.blueCoordinator)
+        startEmbedded(children: [
+            self.redCoordinator,
+            self.greenCoordinator,
+            self.blueCoordinator
+        ])
         
         return [
             self.redCoordinator.rootViewController,
