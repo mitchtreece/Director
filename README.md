@@ -170,7 +170,7 @@ A tab-bar interface is a good example of this. Our root view (the tab bar) conta
 with their own navigation paths. To achieve this, you can use **embedded** view coordinators.
 
 ```
-class TabCoordinator {
+class TabCoordinator: ViewCoordinator {
 
     private var tabBarController: UITabBarController!
     private var redCoordinator = RedCoordinator()
@@ -206,8 +206,6 @@ class TabCoordinator {
 
 By calling `startEmbedded(child:)` or `startEmbedded(children:)`, the child view coordinators are setup without any automatic presentation logic.
 This is ideal when building custom multi-view interfaces.
-
----
 
 ## Contributing
 Pull-requests are more than welcome. Bug fix? Feature? Open a PR and we'll get it merged in!
