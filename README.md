@@ -35,7 +35,7 @@ The library consists of three main components:
 - `ViewCoordinator`
 
 ### SceneDirector
-`SceneDirector` is an application-level class that manages a scene's window & initial view coordinator presentation.
+`SceneDirector` is an scene-level class that manages a scene's window & initial view coordinator presentation.
 Depending on your target iOS version, it's initialized & started on application launch *or* scene connection.
 
 **AppDelegate**
@@ -89,7 +89,7 @@ view presentation, we _do not_ use a main storyboard. You can simply remove the 
 your view coordinator subclasses.
 
 ### SceneCoordinator
-`SceneCoordinator` is a root-level class that manages the initial view coordinator displayed by an application.
+`SceneCoordinator` is a root-level coordinator class that manages the initial view coordinator displayed by an application.
 This should be subclassed to return an appropriate `ViewCoordinator` instance when your application launches.
 
 ```
