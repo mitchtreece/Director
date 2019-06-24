@@ -1,13 +1,15 @@
 ![Director](Resources/banner.png)
 
 [![Version](https://img.shields.io/cocoapods/v/Director.svg?style=for-the-badge)](http://cocoapods.org/pods/Director)
-[![SPM](https://img.shields.io/badge/spm-✓-orange.svg?style=for-the-badge)](https://swift.org/package-manager)
-![Swift](https://img.shields.io/badge/Swift-5-orange.svg?style=for-the-badge)
-![iOS](https://img.shields.io/badge/iOS-12-green.svg?style=for-the-badge)
+[![SPM](https://img.shields.io/badge/spm-coming_soon-orange.svg?style=for-the-badge)](https://swift.org/package-manager)
+![Swift](https://img.shields.io/badge/Swift-5.1-orange.svg?style=for-the-badge)
+![iOS](https://img.shields.io/badge/iOS-12--13-green.svg?style=for-the-badge)
 [![License](https://img.shields.io/cocoapods/l/Director.svg?style=for-the-badge)](http://cocoapods.org/pods/Director)
 
 ## Overview
 Director is a lightweight coordinator library written for Swift. 🎬
+
+**NOTE**: This library was built for Swift 5.1 & iOS 13. To run the example project, you must target iOS 13 - which requires the Xcode 11 beta.
 
 ## Installation
 ### CocoaPods
@@ -38,8 +40,9 @@ The library consists of three main components:
 `SceneDirector` is an scene-level class that manages a scene's window & initial view coordinator presentation.
 Depending on your target iOS version, it's initialized & started on application launch *or* scene connection.
 
-**AppDelegate**
-```
+**AppDelegate (iOS 12)**
+
+```swift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -62,8 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-**SceneDelegate**
-```
+**SceneDelegate (iOS 13)**
+
+```swift
 @available(iOS 13, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -92,7 +96,7 @@ your view coordinator subclasses.
 `SceneCoordinator` is a root-level coordinator class that manages the initial view coordinator displayed by an application.
 This should be subclassed to return an appropriate `ViewCoordinator` instance when your application launches.
 
-```
+```swift
 class ExampleSceneCoordinator: SceneCoordinator {
 
    override func build() -> ViewCoordinator {
@@ -105,7 +109,7 @@ class ExampleSceneCoordinator: SceneCoordinator {
 ### ViewCoordinator
 `ViewCoordinator` is a class that manages the display state, navigation path, & presentation / dismissal logic for a set of related views.
 
-```
+```swift
 class HomeCoordinator: ViewCoordinator {
 
    override func build() -> UIViewController {
@@ -125,7 +129,7 @@ about it's parent coordinator. This is important. For example, what if we wanted
 different coordinators? A protocol / delegate approach allows us to convey our user-actions to the coordinator while
 keeping it generic enough for reuse.
 
-```
+```swift
 extension HomeCoordinator: HomeViewControllerDelegate {
 
     func homeViewControllerDidTapDetail(_ viewController: HomeViewController) {
@@ -147,7 +151,7 @@ or distinctly different from the current path in other coordinators.
 For example, if our `HomeCoordinator` from above needed to display a profile view with it's own navigation paths,
 we could group it into a `ProfileCoordinator` and start it as a child of our `HomeCoordinator`.
 
-```
+```swift
 extension HomeCoordinator: HomeViewControllerDelegate {
 
     ...
@@ -169,7 +173,7 @@ There are scenarios where a view coordinator might need to manage child views an
 A tab-bar interface is a good example of this. Our root view (the tab bar) contains several child views (its tabs) each
 with their own navigation paths. To achieve this, you can use **embedded** view coordinators.
 
-```
+```swift
 class TabCoordinator: ViewCoordinator {
 
     private var tabBarController: UITabBarController!
@@ -206,6 +210,19 @@ class TabCoordinator: ViewCoordinator {
 
 By calling `startEmbedded(child:)` or `startEmbedded(children:)`, the child view coordinators are setup without any automatic presentation logic.
 This is ideal when building custom multi-view interfaces.
+
+## SwiftUI
+Director fully supports SwiftUI. Simply return a `UIHostingController` when building your view coordinator.
+
+```swift
+class SwiftUICoordinator: ViewCoordinator {
+
+    override func build() -> UIViewController {
+        return UIHostingController(rootView: MyView())
+    }
+
+}
+```
 
 ## Contributing
 Pull-requests are more than welcome. Bug fix? Feature? Open a PR and we'll get it merged in!
