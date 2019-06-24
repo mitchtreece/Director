@@ -48,7 +48,10 @@ internal extension AnyCoordinator {
     }
     
     func debugLog(_ string: String) {
+        
+        guard self.sceneCoordinator.director.isDebugEnabled else { return }
         print("🎬 \(string)")
+        
     }
     
 }

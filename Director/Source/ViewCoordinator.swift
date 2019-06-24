@@ -293,15 +293,15 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             
             let parentViewCoordinator = parent as! ViewCoordinator
             
-            debugLog("\(parentViewCoordinator.typeString) -+= \(self.typeString), \(coordinator.typeString)")
+            debugLog("\(parentViewCoordinator.typeString) -(replace)-> \(self.typeString), -(with)-> \(coordinator.typeString)")
             
             coordinator.parentCoordinator = self.parentCoordinator
             (self.parentCoordinator as! ViewCoordinator).start(
                 child: coordinator,
-                animated: animated
-            )
-            
-            finish()
+                animated: animated,
+                completion: {
+                    self.finish(completion: completion)
+                })
             
         }
         
@@ -403,7 +403,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     private func add(child coordinator: ViewCoordinator) {
         
         guard !self.children.contains(coordinator) else { return }
-        debugLog("\(self.typeString) += \(coordinator.typeString)")
+        debugLog("\(self.typeString) -(add)-> \(coordinator.typeString)")
         self.children.append(coordinator)
         
     }
@@ -420,7 +420,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
         for child in coordinator.children {
             
-            debugLog("\(coordinator.typeString) -= \(child.typeString)")
+            debugLog("\(coordinator.typeString) -(remove)-> \(child.typeString)")
             child.isFinished = true
             child.didFinish()
             
@@ -430,7 +430,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
         // Remove child
         
-        debugLog("\(self.typeString) -= \(coordinator.typeString)")
+        debugLog("\(self.typeString) -(remove)-> \(coordinator.typeString)")
         coordinator.isFinished = true
         self.children.remove(at: index)
         

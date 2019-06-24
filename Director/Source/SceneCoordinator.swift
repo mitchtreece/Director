@@ -103,8 +103,9 @@ open class SceneCoordinator: AnyCoordinator {
             self.navigationController.pushViewController(viewController, completion: {
                 self.navigationController.setViewControllers([viewController], animated: false)
                 self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-                self.rootCoordinator.didStart()
             })
+            
+            self.rootCoordinator.didStart()
             
         }
         else {
@@ -121,16 +122,14 @@ open class SceneCoordinator: AnyCoordinator {
         
         self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
         
-        debugLog("\(self.typeString) << \(self.rootCoordinator.typeString)")
-
         let viewController = self.rootCoordinator.rootViewController!
         
         guard animated else {
             
             self.navigationController.setViewControllers([viewController], animated: false)
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            self.rootCoordinator.didStart()
             completion?()
+            
             return
             
         }
@@ -143,17 +142,20 @@ open class SceneCoordinator: AnyCoordinator {
             self.navigationController.pushViewController(viewController, completion: {
                 self.navigationController.setViewControllers([viewController], animated: false)
                 self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-                self.rootCoordinator.didStart()
                 completion?()
             })
             
         }
         else {
-            
+
             self.navigationController.setViewControllers([viewController], animated: true)
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            self.rootCoordinator.didStart()
-            completion?()
+            
+            // Hacky, but it works
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                completion?()
+            }
             
         }
         

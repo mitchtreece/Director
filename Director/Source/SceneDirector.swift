@@ -60,7 +60,7 @@ public final class SceneDirector {
     internal private(set) var window: UIWindow
     private(set) var sceneCoordinator: SceneCoordinator
     
-    private var isDebugEnabled: Bool
+    internal var isDebugEnabled: Bool
     
     /// The scene director's managed navigation controller.
     public var navigationController: UINavigationController {

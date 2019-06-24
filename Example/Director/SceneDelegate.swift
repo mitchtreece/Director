@@ -27,7 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.director = SceneDirector(
             ExampleSceneCoordinator(),
-            window: self.window!
+            window: self.window!,
+            debug: true
         ).start()
         
     }
