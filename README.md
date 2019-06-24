@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/cocoapods/v/Director.svg?style=for-the-badge)](http://cocoapods.org/pods/Director)
 [![SPM](https://img.shields.io/badge/spm-✓-orange.svg?style=for-the-badge)](https://swift.org/package-manager)
 ![Swift](https://img.shields.io/badge/Swift-5-orange.svg?style=for-the-badge)
-![iOS](https://img.shields.io/badge/iOS-12--13-green.svg?style=for-the-badge)
+![iOS](https://img.shields.io/badge/iOS-12-green.svg?style=for-the-badge)
 [![License](https://img.shields.io/cocoapods/l/Director.svg?style=for-the-badge)](http://cocoapods.org/pods/Director)
 
 ## Overview
@@ -16,7 +16,7 @@ pod 'Director', '~> 1.0'
 ```
 
 ### Swift Package Manager
-TODO
+**Coming Soon**
 
 ## The Coordinator Pattern
 Coordinators helps consolidate and manage view display state. They are used to define an application's path in chunks,
