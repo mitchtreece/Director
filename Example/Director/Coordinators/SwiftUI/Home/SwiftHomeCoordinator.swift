@@ -10,7 +10,6 @@ import UIKit
 import SwiftUI
 import Director
 
-@available(iOS 13, *)
 class SwiftHomeCoordinator: ViewCoordinator {
     
     override func build() -> UIViewController {
@@ -22,7 +21,6 @@ class SwiftHomeCoordinator: ViewCoordinator {
     
 }
 
-@available(iOS 13, *)
 extension SwiftHomeCoordinator: SwiftHomeViewDelegate {
     
     func swiftHomeViewDidTapUIKit(_ view: SwiftHomeView) {

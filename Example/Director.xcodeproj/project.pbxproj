@@ -336,10 +336,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = KKSYLRXR4A;
 						LastSwiftMigration = 1100;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = KKSYLRXR4A;
 						LastSwiftMigration = 1100;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -623,6 +625,7 @@
 			baseConfigurationReference = 4281BA35E0DCAE6529F026AA /* Pods-Director_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = KKSYLRXR4A;
 				INFOPLIST_FILE = Director/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -639,6 +642,7 @@
 			baseConfigurationReference = 4F00103842FDA8A95CE58A40 /* Pods-Director_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = KKSYLRXR4A;
 				INFOPLIST_FILE = Director/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -654,6 +658,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F9F0DF11FBCCCB8363DEB34 /* Pods-Director_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = KKSYLRXR4A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -675,6 +680,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 621FE3965640B8369A0E3D04 /* Pods-Director_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = KKSYLRXR4A;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

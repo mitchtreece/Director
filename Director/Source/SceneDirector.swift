@@ -58,7 +58,9 @@ import UIKit
 public final class SceneDirector {
     
     internal private(set) var window: UIWindow
-    private var sceneCoordinator: SceneCoordinator
+    private(set) var sceneCoordinator: SceneCoordinator
+    
+    private var isDebugEnabled: Bool
     
     /// The scene director's managed navigation controller.
     public var navigationController: UINavigationController {
@@ -74,7 +76,10 @@ public final class SceneDirector {
     /// Initializes a scene director with a scene coordinator & window.
     /// - Parameter coordinator: The scene director's root scene coordinator.
     /// - Parameter window: The scene director's managed window.
-    public init(_ coordinator: SceneCoordinator, window: UIWindow) {
+    /// - Parameter debug: Flag indicating if debug logging is enabled; _defaults to false_.
+    public init(_ coordinator: SceneCoordinator, window: UIWindow, debug: Bool = false) {
+        
+        self.isDebugEnabled = debug
         
         self.window = window
         self.window.rootViewController = self.window.rootViewController ?? UINavigationController()

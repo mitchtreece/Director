@@ -24,13 +24,9 @@ class EmbeddedCoordinator: ViewCoordinator {
         
         let nav = UINavigationController(rootViewController: self.embeddedViewController)
         
-        if #available(iOS 13, *) {
-            
-            nav.modalPresentationStyle = Settings.shared.cardPresentation ?
-                .automatic :
-                .fullScreen
-            
-        }
+        nav.modalPresentationStyle = Settings.shared.cardPresentation ?
+            .automatic :
+            .fullScreen
         
         return nav
         

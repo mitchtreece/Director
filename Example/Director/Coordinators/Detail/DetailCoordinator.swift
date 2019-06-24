@@ -45,14 +45,10 @@ extension DetailCoordinator: DetailViewControllerDelegate {
         
         let vc = UIStoryboard(name: "Modal", bundle: nil).instantiateViewController(withIdentifier: "ModalViewController")
         let nav = UINavigationController(rootViewController: vc)
-        
-        if #available(iOS 13, *) {
-            
-            nav.modalPresentationStyle = Settings.shared.cardPresentation ?
-                .automatic :
-                .fullScreen
-            
-        }
+
+        nav.modalPresentationStyle = Settings.shared.cardPresentation ?
+            .automatic :
+            .fullScreen
         
         modal(nav)
         
@@ -63,7 +59,8 @@ extension DetailCoordinator: DetailViewControllerDelegate {
     }
     
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController) {
-        finish()
+        self.sceneCoordinator.finishToRoot()
+        // finish()
     }
     
 }

@@ -24,11 +24,7 @@ class HomeCoordinator: ViewCoordinator {
 extension HomeCoordinator: HomeViewControllerDelegate {
     
     func homeViewControllerDidTapSwiftUI(_ viewController: HomeViewController) {
-        
-        if #available(iOS 13, *) {
-            replace(with: SwiftHomeCoordinator())
-        }
-        
+        replace(with: SwiftHomeCoordinator())
     }
     
     func homeViewControllerDidTapDetail(_ viewController: HomeViewController) {

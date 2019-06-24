@@ -32,7 +32,7 @@ open class SceneCoordinator: AnyCoordinator {
         return self.director.navigationController
     }
     
-    private var rootCoordinator: ViewCoordinator!
+    public private(set) var rootCoordinator: ViewCoordinator!
     
     // MARK: Public
     
@@ -47,7 +47,20 @@ open class SceneCoordinator: AnyCoordinator {
     ///
     /// - Returns: A `ViewCoordinator` instance.
     open func build() -> ViewCoordinator {
-        fatalError("SceneCoordinator must return an initial coordinator")
+        fatalError("SceneCoordinator must return an initial view coordinator")
+    }
+    
+    /// Removes all children from the scene coordinator's root view coordinator.
+    ///
+    /// - Parameter animated: Flag indicating if this should be done with an animation; _defaults to true_.
+    /// - Parameter completion: An optional completion handler to call after all child view coordinators are removed; _defaults to nil_.
+    public final func finishToRoot(animated: Bool = true, completion: (()->())? = nil) {
+        
+        replaceRootWithRoot(
+            animated: animated,
+            completion: completion
+        )
+        
     }
     
     // MARK: Private
@@ -60,7 +73,7 @@ open class SceneCoordinator: AnyCoordinator {
         
     }
     
-    internal func replaceRoot(with coordinator: ViewCoordinator, animated: Bool = true) {
+    internal func replaceRoot(with coordinator: ViewCoordinator, animated: Bool, completion: (()->())?) {
         
         guard let viewController = UIViewController.root(in: coordinator.build()) else {
             fatalError("SceneCoordinator failed to load replacement coordinator's root view controller")
@@ -99,6 +112,48 @@ open class SceneCoordinator: AnyCoordinator {
             self.navigationController.setViewControllers([viewController], animated: true)
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
             self.rootCoordinator.didStart()
+            
+        }
+        
+    }
+    
+    internal func replaceRootWithRoot(animated: Bool, completion: (()->())?) {
+        
+        self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
+        
+        debugLog("\(self.typeString) << \(self.rootCoordinator.typeString)")
+
+        let viewController = self.rootCoordinator.rootViewController!
+        
+        guard animated else {
+            
+            self.navigationController.setViewControllers([viewController], animated: false)
+            self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+            self.rootCoordinator.didStart()
+            completion?()
+            return
+            
+        }
+        
+        if let transitioningDelegate = viewController.transitioningDelegate,
+            let transitioningNavDelegate = transitioningDelegate as? UINavigationControllerDelegate {
+            
+            self.navigationController.delegate = transitioningNavDelegate
+            
+            self.navigationController.pushViewController(viewController, completion: {
+                self.navigationController.setViewControllers([viewController], animated: false)
+                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+                self.rootCoordinator.didStart()
+                completion?()
+            })
+            
+        }
+        else {
+            
+            self.navigationController.setViewControllers([viewController], animated: true)
+            self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+            self.rootCoordinator.didStart()
+            completion?()
             
         }
         

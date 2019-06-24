@@ -145,8 +145,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// Starts & presents a child view coordinator.
     /// - Parameter: coordinator: The child view coordinator.
     /// - Parameter animated: Flag indicating if the view coordinator should be started with an animation; _defaults to true_.
-    public final func start(child coordinator: ViewCoordinator, animated: Bool = true) {
-        _start(child: coordinator, animated: animated, embedded: false)
+    /// - Parameter completion: Optional completion handler to call after the child view coordinator has been started; _defaults to nil_.
+    public final func start(child coordinator: ViewCoordinator, animated: Bool = true, completion: (()->())? = nil) {
+        _start(child: coordinator, animated: animated, embedded: false, completion: completion)
     }
     
     /// Starts an embedded child view coordinator.
@@ -156,7 +157,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     ///
     /// - Parameter coordinator: The child view coordinator.
     public final func startEmbedded(child coordinator: ViewCoordinator) {
-        _start(child: coordinator, animated: false, embedded: true)
+        _start(child: coordinator, animated: false, embedded: true, completion: nil)
     }
     
     /// Starts a collection of embedded child view coordinators.
@@ -166,10 +167,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     ///
     /// - Parameter children: The child view coordinators.
     public final func startEmbedded(children: [ViewCoordinator]) {
-        children.forEach { self._start(child: $0, animated: false, embedded: true) }
+        children.forEach { self._start(child: $0, animated: false, embedded: true, completion: nil) }
     }
     
-    private func _start(child coordinator: ViewCoordinator, animated: Bool, embedded: Bool) {
+    private func _start(child coordinator: ViewCoordinator, animated: Bool, embedded: Bool, completion: (()->())?) {
         
         guard !coordinator.isStarted else { return }
         coordinator.isStarted = true
@@ -206,6 +207,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             // Just call didStart(), and return
             
             coordinator.didStart()
+            completion?()
             return
             
         }
@@ -221,8 +223,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             UIViewController.active(in: self.navigationController)?.present(
                 nav,
                 animated: animated,
-                completion: nil
-            )
+                completion: {
+                    completion?()
+                    coordinator.didStart()
+                })
             
         }
         else {
@@ -234,6 +238,8 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
                     animated: false
                 )
                 
+                coordinator.didStart()
+                completion?()
                 return
                 
             }
@@ -246,36 +252,40 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
                 
                 self.navigationController.pushViewController(viewController, completion: {
                     self.navigationController.delegate = oldDelegate
+                    coordinator.didStart()
+                    completion?()
                 })
                 
                 return
                 
             }
             
-            self.navigationController.pushViewController(
-                viewController,
-                animated: true
-            )
+            self.navigationController.pushViewController(viewController, completion: {
+                coordinator.didStart()
+                completion?()
+            })
             
         }
-        
-        coordinator.didStart()
         
     }
 
     /// Replaces the receiving view coordinator with another in the same parent coordinator.
     /// - Parameter coordinator: The replacement view coordinator.
     /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
-    public final func replace(with coordinator: ViewCoordinator, animated: Bool = true) {
+    /// - Parameter completion: Optional completion handler to call after the replacement has finished; _defaults to nil_.
+    public final func replace(with coordinator: ViewCoordinator, animated: Bool = true, completion: (()->())? = nil) {
         
         guard !self.isEmbedded else { return }
         guard let parent = self.parentCoordinator else { return }
+        
+        self.children.forEach { $0.removeForParentReplacement() }
         
         if let sceneCoordinator = parent as? SceneCoordinator {
 
             sceneCoordinator.replaceRoot(
                 with: coordinator,
-                animated: animated
+                animated: animated,
+                completion: completion
             )
             
         }
@@ -384,7 +394,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             completion: {
                 self.didFinish()
                 completion?()
-        })
+            })
         
     }
     
@@ -400,20 +410,33 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     
     private func remove(child coordinator: ViewCoordinator,
                         fromNavigationPop: Bool = false,
+                        forReplacement: Bool = false,
                         completion: (()->())? = nil) {
         
         guard !coordinator.isFinished else { return }
         guard let index = self.children.firstIndex(where: { $0 === coordinator }) else { return }
         
+        // Finish child's children
+        
         for child in coordinator.children {
+            
             debugLog("\(coordinator.typeString) -= \(child.typeString)")
+            child.isFinished = true
+            child.didFinish()
+            
         }
         
-        debugLog("\(self.typeString) -= \(coordinator.typeString)")
+        coordinator.children.removeAll()
         
+        // Remove child
+        
+        debugLog("\(self.typeString) -= \(coordinator.typeString)")
         coordinator.isFinished = true
         self.children.remove(at: index)
         
+        // Dismiss if needed
+        
+        guard !forReplacement else { return }
         guard !coordinator.isEmbedded else { return }
         
         self.navigationController.delegate = self.presentationDelegate
@@ -441,6 +464,19 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             })
             
         }
+        
+    }
+    
+    internal func removeForParentReplacement() {
+        
+        guard !self.isFinished else { return }
+        
+        self.children.forEach { $0.removeForParentReplacement() }
+        
+        (self.parentCoordinator as? ViewCoordinator)?.remove(
+            child: self,
+            forReplacement: true
+        )
         
     }
     

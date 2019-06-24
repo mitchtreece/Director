@@ -8,12 +8,10 @@
 
 import SwiftUI
 
-@available(iOS 13, *)
 protocol SwiftHomeViewDelegate: class {
     func swiftHomeViewDidTapUIKit(_ view: SwiftHomeView)
 }
 
-@available(iOS 13, *)
 struct SwiftHomeView : View {
     
     var body: some View {

@@ -27,28 +27,18 @@ class HomeViewController: UIViewController {
         
         super.viewDidLoad()
         
-        if #available(iOS 13, *) {
-            
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: "SwiftUI",
-                style: .plain,
-                target: self,
-                action: #selector(didTapSwiftUI(_:))
-            )
-            
-            self.modalCardsSwitch.addTarget(
-                self,
-                action: #selector(modalCardsSwitchValueChanged(_:)),
-                for: .valueChanged
-            )
-            
-        }
-        else {
-            
-            self.settingsLabel.isHidden = true
-            self.modalCardsContentView.isHidden = true
-            
-        }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "SwiftUI",
+            style: .plain,
+            target: self,
+            action: #selector(didTapSwiftUI(_:))
+        )
+        
+        self.modalCardsSwitch.addTarget(
+            self,
+            action: #selector(modalCardsSwitchValueChanged(_:)),
+            for: .valueChanged
+        )
         
     }
     

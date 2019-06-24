@@ -19,13 +19,9 @@ class ModalCoordinator: ViewCoordinator {
         
         let nav = UINavigationController(rootViewController: vc)
         
-        if #available(iOS 13, *) {
-            
-            nav.modalPresentationStyle = Settings.shared.cardPresentation ?
-                .automatic :
-                .fullScreen
-            
-        }
+        nav.modalPresentationStyle = Settings.shared.cardPresentation ?
+            .automatic :
+            .fullScreen
         
         return nav
         
