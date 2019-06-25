@@ -20,13 +20,13 @@ pod 'Director', '~> 1.0'
 ### Swift Package Manager
 **Coming Soon**
 
-## The Coordinator Pattern
+## Coordinators
 Coordinators helps consolidate and manage view display state. They are used to define an application's path in chunks,
 while keeping navigation logic separate from app & view logic. Coordinators manage the navigation of *only* what they're
 concerned with. Multiple coordinators can live in a single navigation stack, each managing a slice of the stack's views.
 Likewise, a coordinator can be associated with as many (or as few) views as needed.
 
-TODO: COORDINATOR NAVIGATION FLOW CHART
+![Graph #1](Resources/graph_1.png)
 
 ## Director
 Director is a lightweight coordinator implementation that helps keep your application's navigation paths simple & reusable.
