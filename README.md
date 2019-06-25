@@ -37,7 +37,7 @@ The library consists of three main components:
 - `ViewCoordinator`
 
 ### SceneDirector
-`SceneDirector` is an scene-level class that manages a scene's window & initial view coordinator presentation.
+`SceneDirector` is a scene-level class that manages a scene's window & initial view coordinator presentation.
 Depending on your target iOS version, it's initialized & started on application launch *or* scene connection.
 
 **AppDelegate (iOS 12)**
@@ -89,12 +89,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 ```
 
 **NOTE:** You might have noticed we initialized our window manually in the above example. Because our `SceneDirector` manages our window and initial
-view presentation, we _do not_ use a main storyboard. You can simply remove the storyboard file added to your project by default, and clear the "Main Interface" field in your target settings. You can continue using storyboards for your other view elements if desired. Simply load them directly from
+view presentation, we **do not** use a main storyboard. You can simply remove the storyboard file added to your project by default, and clear the "Main Interface" field in your target settings. You can continue using storyboards for your other view elements if desired. Simply load them directly from
 your view coordinator subclasses.
 
 ### SceneCoordinator
 `SceneCoordinator` is a root-level coordinator class that manages the initial view coordinator displayed by an application.
-This should be subclassed to return an appropriate `ViewCoordinator` instance when your application launches.
+This should be subclassed to return an appropriate `ViewCoordinator` instance on application launch _or_ scene connection.
 
 ```swift
 class ExampleSceneCoordinator: SceneCoordinator {
@@ -107,7 +107,7 @@ class ExampleSceneCoordinator: SceneCoordinator {
 ```
 
 ### ViewCoordinator
-`ViewCoordinator` is a class that manages the display state, navigation path, & presentation / dismissal logic for a set of related views.
+`ViewCoordinator` is a class that manages the display state, navigation path, and presentation / dismissal logic for a set of related views.
 
 ```swift
 class HomeCoordinator: ViewCoordinator {
@@ -125,7 +125,7 @@ class HomeCoordinator: ViewCoordinator {
 
 We want to abstract away navigation logic from the view. Instead, we let our coordinator decide how to navigate
 when a user triggers actions on our view. To further enforce this separation of concerns, our view *shouldn't* know
-about it's parent coordinator. This is important. For example, what if we wanted a generic view to be used in many
+about it's parent coordinator. **This is important.** For example, what if we wanted a generic view to be used in many
 different coordinators? A protocol / delegate approach allows us to convey our user-actions to the coordinator while
 keeping it generic enough for reuse.
 
