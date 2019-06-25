@@ -148,14 +148,10 @@ open class SceneCoordinator: AnyCoordinator {
         }
         else {
 
-            self.navigationController.setViewControllers([viewController], animated: true)
-            self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            
-            // Hacky, but it works
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            self.navigationController.setViewControllers([viewController], completion: {
+                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
                 completion?()
-            }
+            })
             
         }
         

@@ -269,7 +269,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
 
-    /// Replaces the receiving view coordinator with another in the same parent coordinator.
+    /// Replaces the view coordinator with another in the same parent coordinator.
     /// - Parameter coordinator: The replacement view coordinator.
     /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
     /// - Parameter completion: Optional completion handler to call after the replacement has finished; _defaults to nil_.
@@ -307,70 +307,77 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
-    //    public final func replace(with viewControllers: [UIViewController], animated: Bool = true) {
-    //
-    //        guard !viewControllers.isEmpty else {
-    //            debugLog("Cannot replace a ViewCoordinator's managed view controllers with an empty set")
-    //            return
-    //        }
-    //
-    //        let currentViewControllers = self.navigationController.viewControllers
-    //
-    //        guard let startArrayIndex = currentViewControllers
-    //            .firstIndex(of: self.rootViewController) else { return }
-    //
-    //        let startIndex = Int(startArrayIndex)
-    //        var endIndex = (currentViewControllers.count - 1)
-    //
-    //        if let firstChildRoot = self.children.first?.rootViewController {
-    //
-    //            guard let endArrayIndex = currentViewControllers
-    //                .firstIndex(of: firstChildRoot) else { return }
-    //
-    //            endIndex = Int(endArrayIndex)
-    //
-    //        }
-    //
-    //        var replacementViewControllers = [UIViewController]()
-    //        var replacementIndex: Int = 0
-    //
-    //        for i in 0..<currentViewControllers.count {
-    //
-    //            var vc = currentViewControllers[i]
-    //
-    //            if (i >= startIndex) && (i <= endIndex) {
-    //                vc = viewControllers[replacementIndex]
-    //                replacementIndex += 1
-    //            }
-    //
-    //            replacementViewControllers.append(vc)
-    //
-    //        }
-    //
-    //        let newRootViewController = viewControllers.first!
-    //        self.rootViewController = newRootViewController
-    //
-    //        self.navigationDelegate.isEnabled = false
-    //
-    //        if animated {
-    //
-    //            self.navigationController.setViewControllers(replacementViewControllers, completion: {
-    //                self.navigationDelegate.isEnabled = true
-    //            })
-    //
-    //        }
-    //        else {
-    //
-    //            self.navigationController.setViewControllers(
-    //                replacementViewControllers,
-    //                animated: false
-    //            )
-    //
-    //            self.navigationDelegate.isEnabled = true
-    //
-    //        }
-    //
-    //    }
+    /// Replaces the view coordinator's managed child view controllers with another set in the same navigation controller.
+    /// - Parameter viewControllers: The replacement view controllers.
+    /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
+    /// - Parameter completion: An optional completion handler to call after the replacement has finished; _defaults to nil_.
+    public final func replaceChildViewControllers(with viewControllers: [UIViewController], animated: Bool = true, completion: (()->())? = nil) {
+     
+        guard !viewControllers.isEmpty else {
+            debugLog("Cannot replace a view coordinator's managed child view controllers with an empty set; skipping.")
+            return
+        }
+        
+        let currentViewControllers = self.navigationController.viewControllers
+        
+        guard let rootViewControllerArrayIndex = currentViewControllers
+            .firstIndex(of: self.rootViewController) else { return }
+        
+        // Assuming receiving coordinator is top-most.
+        // This might not be the case as the end index might
+        // not always be (vc count - 1).
+        // Should handle this better.
+        
+        let startIndex = Int(rootViewControllerArrayIndex)
+        var endIndex = (currentViewControllers.count - 1)
+        
+        if let firstChildRootViewController = self.children.first?.rootViewController {
+            
+            guard let endViewControllerArrayIndex = currentViewControllers
+                .firstIndex(of: firstChildRootViewController) else { return }
+            
+            endIndex = Int(endViewControllerArrayIndex)
+            
+        }
+        
+        var replacementViewControllers = [UIViewController]()
+        var replacementIndex: Int = 0
+        
+        for i in 0..<currentViewControllers.count {
+            
+            var vc = currentViewControllers[i]
+            
+            if (i >= startIndex) && (i <= endIndex) {
+                vc = viewControllers[replacementIndex]
+                replacementIndex += 1
+            }
+            
+            replacementViewControllers.append(vc)
+            
+        }
+        
+        self.rootViewController = viewControllers.first!
+        self.presentationDelegate.isEnabled = false
+        
+        if animated {
+            
+            self.navigationController.setViewControllers(replacementViewControllers, completion: {
+                self.presentationDelegate.isEnabled = true
+            })
+            
+        }
+        else {
+            
+            self.navigationController.setViewControllers(
+                replacementViewControllers,
+                animated: false
+            )
+
+            self.presentationDelegate.isEnabled = true
+            
+        }
+        
+    }
     
     /// Removes the view coordinator from its parent's coordinator stack,
     /// & dismisses it the same way it was presented.

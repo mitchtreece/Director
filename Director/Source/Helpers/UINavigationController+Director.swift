@@ -30,5 +30,16 @@ internal extension UINavigationController {
         CATransaction.commit()
         
     }
+
+    func setViewControllers(_ viewControllers: [UIViewController], completion: @escaping ()->()) {
+        
+        CATransaction.begin()
+        self.setViewControllers(viewControllers, animated: true)
+        CATransaction.setCompletionBlock {
+            completion()
+        }
+        CATransaction.commit()
+        
+    }
     
 }
