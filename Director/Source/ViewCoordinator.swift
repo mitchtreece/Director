@@ -67,7 +67,7 @@ import UIKit
 open class ViewCoordinator: AnyCoordinator, Equatable {
     
     public static func == (lhs: ViewCoordinator, rhs: ViewCoordinator) -> Bool {
-        lhs === rhs
+        return lhs === rhs
     }
     
     /// The view coordinator's parent coordinator.
