@@ -68,7 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 **SceneDelegate (iOS 13)**
 
 ```swift
-@available(iOS 13, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
