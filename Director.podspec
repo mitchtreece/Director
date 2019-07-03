@@ -5,7 +5,8 @@ Pod::Spec.new do |s|
   s.summary          = 'Lightweight Swift coordinator library.'
 
   s.description      = <<-DESC
-    Lightweight Swift coordinator library.
+    Director is a lightweight Swift coordinator library for iOS.
+    Lights, cameras, navigation.
     DESC
 
   s.homepage                = 'https://github.com/mitchtreece/Director'
