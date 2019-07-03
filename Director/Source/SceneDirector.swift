@@ -110,6 +110,11 @@ public final class SceneDirector {
             fatalError("Director failed to load the scene coordinator's initial child view controller")
         }
         
+        if self.isDebugEnabled {
+            print("🎬 SceneDirector -(start)-> \(self.sceneCoordinator.typeString)")
+            print("🎬 \(self.sceneCoordinator.typeString) -(add)-> \(coordinator.typeString)")
+        }
+        
         self.navigationController.setViewControllers([rootViewController], animated: false)
         coordinator.navigationController = self.navigationController
         coordinator.navigationController.delegate = coordinator.presentationDelegate

@@ -79,7 +79,7 @@ open class SceneCoordinator: AnyCoordinator {
             fatalError("SceneCoordinator failed to load replacement coordinator's root view controller")
         }
         
-        debugLog("\(self.typeString) -+= \(self.rootCoordinator.typeString), \(coordinator.typeString)")
+        debugLog("\(self.typeString) -(replace)-> \(self.rootCoordinator.typeString) -(with)-> \(coordinator.typeString)")
         
         coordinator.parentCoordinator = self
         coordinator.navigationController = self.navigationController
