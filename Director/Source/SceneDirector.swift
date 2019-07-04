@@ -58,7 +58,7 @@ import UIKit
 public final class SceneDirector {
     
     internal private(set) var window: UIWindow
-    private(set) var sceneCoordinator: SceneCoordinator
+    public private(set) var sceneCoordinator: SceneCoordinator
     
     internal var isDebugEnabled: Bool
     
