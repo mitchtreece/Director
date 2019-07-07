@@ -18,6 +18,29 @@ Pod::Spec.new do |s|
   s.swift_version           = '5'
   s.ios.deployment_target   = '12.0'
 
-  s.source_files = 'Director/Source/**/*'
+  # Subspecs
+
+  s.default_subspec = 'Core'
+
+  s.subspec 'Core' do |core|
+
+      core.source_files       = 'Director/Source/Core/**/*'
+
+  end
+
+  s.subspec 'DI' do |di|
+
+      di.source_files       = 'Director/Source/DI/**/*'
+      di.dependency         'Director/Core'
+      di.dependency         'Swinject', '~> 2.6.0'
+
+  end
+
+  s.subspec 'All' do |all|
+
+      all.dependency        'Director/Core'
+      all.dependency        'Director/DI'
+
+  end
 
 end
