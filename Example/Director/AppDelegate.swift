@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             self.director = SceneDirector(
                 ExampleSceneCoordinator(),
-                window: self.window!
+                window: self.window!,
+                debug: true
             ).start()
             
         }
@@ -39,8 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
+        
         // Called when the application is about to terminate.
         // Save data if appropriate. See also applicationDidEnterBackground:.
+        
     }
     
     // MARK: UISceneSession Lifecycle
@@ -62,10 +65,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @available(iOS 13, *)
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+        
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running.
         // This will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        
     }
     
 }
