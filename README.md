@@ -75,7 +75,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        guard let windowScene = scene as? UIWindowScene else { return }
+
+        self.window = UIWindow(windowScene: windowScene)
 
         self.director = SceneDirector(
             ExampleSceneCoordinator(),
