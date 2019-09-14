@@ -213,8 +213,8 @@
 		262B3C0E22D16B1500092550 /* DI */ = {
 			isa = PBXGroup;
 			children = (
-				262B3C1122D16BEA00092550 /* AnyCoordinator+DI.swift */,
 				262B3C0F22D16B3500092550 /* SceneDirector+DI.swift */,
+				262B3C1122D16BEA00092550 /* AnyCoordinator+DI.swift */,
 			);
 			name = DI;
 			path = Director/Source/DI;
