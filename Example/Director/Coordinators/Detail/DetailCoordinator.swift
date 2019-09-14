@@ -59,11 +59,7 @@ extension DetailCoordinator: DetailViewControllerDelegate {
     }
     
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController) {
-        
         self.sceneCoordinator.finishToRoot(animated: false)
-        
-        // finish()
-        
     }
     
 }
