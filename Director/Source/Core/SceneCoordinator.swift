@@ -34,6 +34,10 @@ open class SceneCoordinator: AnyCoordinator {
     
     public private(set) var rootCoordinator: ViewCoordinator!
     
+    public var topCoordinator: ViewCoordinator {
+        return topCoordinator(in: self.rootCoordinator)
+    }
+    
     // MARK: Public
     
     public init() {
@@ -64,6 +68,16 @@ open class SceneCoordinator: AnyCoordinator {
     }
     
     // MARK: Private
+    
+    private func topCoordinator(in base: ViewCoordinator) -> ViewCoordinator {
+        
+        guard let lastManagedChild = base.children
+            .filter({ !$0.isEmbedded })
+            .last else { return base }
+        
+        return topCoordinator(in: lastManagedChild)
+        
+    }
     
     internal func buildForDirector() -> ViewCoordinator {
         
