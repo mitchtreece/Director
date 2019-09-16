@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'Director'
-  s.version          = '1.0.4'
+  s.version          = '1.0.5'
   s.summary          = 'Lightweight Swift coordinator library.'
 
   s.description      = <<-DESC
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
 
       di.source_files       = 'Director/Source/DI/**/*'
       di.dependency         'Director/Core'
-      di.dependency         'Swinject', '~> 2.6.0'
+      di.dependency         'Swinject', '~> 2.7.0'
 
   end
 
