@@ -34,6 +34,10 @@ open class SceneCoordinator: AnyCoordinator {
     
     public private(set) var rootCoordinator: ViewCoordinator!
     
+    /// The scene coordinator's top-most child view cordinator,
+    /// or the root view coordinator if no children have been started.
+    ///
+    /// This ignores embedded child view coordinator.
     public var topCoordinator: ViewCoordinator {
         return topCoordinator(in: self.rootCoordinator)
     }

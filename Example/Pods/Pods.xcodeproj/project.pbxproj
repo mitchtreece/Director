@@ -16,6 +16,7 @@
 		1B0C1F537FC220B1E1C8B2FE4651600B /* SynchronizedResolver.Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8E9F38033CE5CF4AA69A2F041A75EF /* SynchronizedResolver.Arguments.swift */; };
 		262B3C1022D16B3500092550 /* SceneDirector+DI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B3C0F22D16B3500092550 /* SceneDirector+DI.swift */; };
 		262B3C1222D16BEA00092550 /* AnyCoordinator+DI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B3C1122D16BEA00092550 /* AnyCoordinator+DI.swift */; };
+		26F2DC65232CCC0600168F38 /* DIStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F2DC64232CCC0600168F38 /* DIStorage.swift */; };
 		2A50EB011D444C6FA0ADEA82DF81224F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33309C8BFF8B1F3130A0F07100E27F41 /* Foundation.framework */; };
 		2BA7446701D2FBE0A09675D41EFBFE0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33309C8BFF8B1F3130A0F07100E27F41 /* Foundation.framework */; };
 		2EFBCC269E2794556E86FA837CA1EE56 /* _Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F6FF06C87DA07BC195A69EDA71FDF /* _Resolver.swift */; };
@@ -102,6 +103,7 @@
 		262B3C0F22D16B3500092550 /* SceneDirector+DI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneDirector+DI.swift"; sourceTree = "<group>"; };
 		262B3C1122D16BEA00092550 /* AnyCoordinator+DI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyCoordinator+DI.swift"; sourceTree = "<group>"; };
 		26B708847705E80E89B28CA9E85F4F77 /* Container.TypeForwarding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Container.TypeForwarding.swift; path = Sources/Container.TypeForwarding.swift; sourceTree = "<group>"; };
+		26F2DC64232CCC0600168F38 /* DIStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIStorage.swift; sourceTree = "<group>"; };
 		282A054CDB928CFBBC0ABFC863EF3E47 /* Pods-Director_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Director_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2A6023605D231C601383697A24B0F04F /* Director.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = Director.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2B6729FF7B9CE8E601A5E20FC7C56971 /* Pods-Director_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Director_Example-frameworks.sh"; sourceTree = "<group>"; };
@@ -213,8 +215,9 @@
 		262B3C0E22D16B1500092550 /* DI */ = {
 			isa = PBXGroup;
 			children = (
-				262B3C1122D16BEA00092550 /* AnyCoordinator+DI.swift */,
+				26F2DC64232CCC0600168F38 /* DIStorage.swift */,
 				262B3C0F22D16B3500092550 /* SceneDirector+DI.swift */,
+				262B3C1122D16BEA00092550 /* AnyCoordinator+DI.swift */,
 			);
 			name = DI;
 			path = Director/Source/DI;
@@ -617,6 +620,7 @@
 				262B3C1022D16B3500092550 /* SceneDirector+DI.swift in Sources */,
 				9434AF6DDB08CEF626E224DBF57E1B32 /* Director-dummy.m in Sources */,
 				E70E42A4048B9D47DB83A305894CC422 /* SceneCoordinator.swift in Sources */,
+				26F2DC65232CCC0600168F38 /* DIStorage.swift in Sources */,
 				0C725391356C5E2E8B54D0440797317C /* SceneDirector.swift in Sources */,
 				B8C3154E5CEEE79EE83374932E0DC9B4 /* UINavigationController+Director.swift in Sources */,
 				9BC6D66FFC35ABF0C23D3798FCDA4834 /* UIViewController+Director.swift in Sources */,
