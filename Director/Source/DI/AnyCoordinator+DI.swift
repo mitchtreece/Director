@@ -11,7 +11,7 @@ public extension AnyCoordinator /* DI */ {
         
     /// The coordinator's dependency resolver.
     var resolver: Resolver? {
-        return self.sceneCoordinator.director.resolver
+        return DIStorage.shared.resolver
     }
     
 }
