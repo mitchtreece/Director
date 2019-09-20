@@ -11,34 +11,68 @@ internal extension UINavigationController {
     
     func pushViewController(_ viewController: UIViewController, completion: (()->())?) {
         
-        CATransaction.begin()
-        self.pushViewController(viewController, animated: true)
-        CATransaction.setCompletionBlock {
+        pushViewController(
+            viewController,
+            animated: true
+        )
+        
+        if let coordinator = self.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { _ in
+                completion?()
+            }
+        }
+        else {
             completion?()
         }
-        CATransaction.commit()
         
     }
     
     func popToViewController(_ viewController: UIViewController, completion: @escaping ([UIViewController]?)->()) {
         
-        CATransaction.begin()
-        let poppedViewControllers = self.popToViewController(viewController, animated: true)
-        CATransaction.setCompletionBlock {
-            completion(poppedViewControllers)
+        guard let idx = self.viewControllers.firstIndex(of: viewController),
+            (idx < (self.viewControllers.count - 1)) else {
+            completion(nil)
+            return
         }
-        CATransaction.commit()
+
+        let newViewControllers = Array(self.viewControllers[0...idx])
+        let poppedViewControllers = Array(self.viewControllers[(idx + 1)..<self.viewControllers.count])
+        
+        setViewControllers(newViewControllers, completion: {
+            completion(poppedViewControllers)
+        })
+        
+//        let poppedViewControllers = popToViewController(
+//            viewController
+//            animated: true
+//        )
+//
+//        if let coordinator = self.transitionCoordinator {
+//            coordinator.animate(alongsideTransition: nil) { _ in
+//                completion(poppedViewControllers)
+//            }
+//        }
+//        else {
+//            completion(poppedViewControllers)
+//        }
         
     }
 
     func setViewControllers(_ viewControllers: [UIViewController], completion: @escaping ()->()) {
         
-        CATransaction.begin()
-        self.setViewControllers(viewControllers, animated: true)
-        CATransaction.setCompletionBlock {
+        setViewControllers(
+            viewControllers,
+            animated: true
+        )
+        
+        if let coordinator = self.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { _ in
+                completion()
+            }
+        }
+        else {
             completion()
         }
-        CATransaction.commit()
         
     }
     
