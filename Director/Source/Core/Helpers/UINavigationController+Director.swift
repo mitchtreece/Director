@@ -9,11 +9,13 @@ import UIKit
 
 internal extension UINavigationController {
     
-    func pushViewController(_ viewController: UIViewController, completion: (()->())?) {
+    func pushViewController(_ viewController: UIViewController,
+                            animated: Bool,
+                            completion: (()->())?) {
         
         pushViewController(
             viewController,
-            animated: true
+            animated: animated
         )
         
         if let coordinator = self.transitionCoordinator {
@@ -27,42 +29,49 @@ internal extension UINavigationController {
         
     }
     
-    func popToViewController(_ viewController: UIViewController, completion: @escaping ([UIViewController]?)->()) {
+    func popToViewController(_ viewController: UIViewController,
+                             animated: Bool,
+                             completion: @escaping ([UIViewController]?)->()) {
         
-        guard let idx = self.viewControllers.firstIndex(of: viewController),
-            (idx < (self.viewControllers.count - 1)) else {
-            completion(nil)
-            return
-        }
-
-        let newViewControllers = Array(self.viewControllers[0...idx])
-        let poppedViewControllers = Array(self.viewControllers[(idx + 1)..<self.viewControllers.count])
-        
-        setViewControllers(newViewControllers, completion: {
-            completion(poppedViewControllers)
-        })
-        
-//        let poppedViewControllers = popToViewController(
-//            viewController
-//            animated: true
-//        )
+//        guard let idx = self.viewControllers.firstIndex(of: viewController),
+//            (idx < (self.viewControllers.count - 1)) else {
+//            completion(nil)
+//            return
+//        }
 //
-//        if let coordinator = self.transitionCoordinator {
-//            coordinator.animate(alongsideTransition: nil) { _ in
+//        let newViewControllers = Array(self.viewControllers[0...idx])
+//        let poppedViewControllers = Array(self.viewControllers[(idx + 1)..<self.viewControllers.count])
+//
+//        setViewControllers(
+//            newViewControllers,
+//            animated: animated,
+//            completion: {
 //                completion(poppedViewControllers)
-//            }
-//        }
-//        else {
-//            completion(poppedViewControllers)
-//        }
+//            })
+        
+        let poppedViewControllers = popToViewController(
+            viewController,
+            animated: animated
+        )
+
+        if let coordinator = self.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { _ in
+                completion(poppedViewControllers)
+            }
+        }
+        else {
+            completion(poppedViewControllers)
+        }
         
     }
 
-    func setViewControllers(_ viewControllers: [UIViewController], completion: @escaping ()->()) {
+    func setViewControllers(_ viewControllers: [UIViewController],
+                            animated: Bool,
+                            completion: @escaping ()->()) {
         
         setViewControllers(
             viewControllers,
-            animated: true
+            animated: animated
         )
         
         if let coordinator = self.transitionCoordinator {
