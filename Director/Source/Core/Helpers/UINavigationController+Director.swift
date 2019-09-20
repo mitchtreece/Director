@@ -33,22 +33,6 @@ internal extension UINavigationController {
                              animated: Bool,
                              completion: @escaping ([UIViewController]?)->()) {
         
-//        guard let idx = self.viewControllers.firstIndex(of: viewController),
-//            (idx < (self.viewControllers.count - 1)) else {
-//            completion(nil)
-//            return
-//        }
-//
-//        let newViewControllers = Array(self.viewControllers[0...idx])
-//        let poppedViewControllers = Array(self.viewControllers[(idx + 1)..<self.viewControllers.count])
-//
-//        setViewControllers(
-//            newViewControllers,
-//            animated: animated,
-//            completion: {
-//                completion(poppedViewControllers)
-//            })
-        
         let poppedViewControllers = popToViewController(
             viewController,
             animated: animated
