@@ -343,22 +343,19 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             
         }
         
-        var replacementViewControllers = [UIViewController]()
-        var replacementIndex: Int = 0
+        var replacementViewControllers = currentViewControllers
+        let viewControllersToReplace = Array(currentViewControllers[startIndex...endIndex])
         
-        for i in 0..<currentViewControllers.count {
-            
-            var vc = currentViewControllers[i]
-            
-            if (i >= startIndex) && (i <= endIndex) {
-                vc = viewControllers[replacementIndex]
-                replacementIndex += 1
-            }
-            
-            replacementViewControllers.append(vc)
-            
+        viewControllersToReplace.forEach { vc in
+            guard let idx = replacementViewControllers.firstIndex(of: vc) else { return }
+            replacementViewControllers.remove(at: idx)
         }
         
+        replacementViewControllers.insert(
+            contentsOf: viewControllers,
+            at: startIndex
+        )
+                
         self.rootViewController = viewControllers.first!
         self.presentationDelegate.isEnabled = false
         
@@ -446,7 +443,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         }
         
         if let nav = coordinator.rootViewController as? UINavigationController {
-            
+                        
             nav.dismiss(
                 animated: true,
                 completion: completion
@@ -455,13 +452,24 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         }
         else if let nav = coordinator.rootViewController.navigationController, nav == self.navigationController {
             
-            guard let index = nav.viewControllers.firstIndex(of: coordinator.rootViewController) else { return }
-            let destinationViewController = nav.viewControllers[index - 1]
+            guard let idx = nav.viewControllers.firstIndex(of: coordinator.rootViewController) else { return }
             
-            nav.popToViewController(
-                destinationViewController,
+//            let destinationViewController = nav.viewControllers[idx - 1]
+//
+//            nav.popToViewController(
+//                destinationViewController,
+//                animated: true,
+//                completion: { _ in
+//                    completion?()
+//                })
+
+            var vcs = nav.viewControllers
+            vcs.remove(at: idx)
+            
+            nav.setViewControllers(
+                vcs,
                 animated: true,
-                completion: { _ in
+                completion: {
                     completion?()
                 })
             

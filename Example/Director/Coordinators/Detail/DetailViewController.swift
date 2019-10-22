@@ -12,6 +12,8 @@ protocol DetailViewControllerDelegate: class {
     func detailViewControllerDidTapPush(_ viewController: DetailViewController)
     func detailViewControllerDidTapModalPresentation(_ viewController: DetailViewController)
     func detailViewControllerDidTapModalCoordinator(_ viewController: DetailViewController)
+    func detailViewControllerDidTapChildCoordinator(_ viewController: DetailViewController)
+    func detailViewControllerDidTapReplace(_ viewController: DetailViewController)
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController)
 }
 
@@ -55,8 +57,16 @@ class DetailViewController: UIViewController {
         self.delegate?.detailViewControllerDidTapModalCoordinator(self)
     }
     
+    @IBAction private func didTapChildCoordinator(_ sender: UIButton) {
+        self.delegate?.detailViewControllerDidTapChildCoordinator(self)
+    }
+    
+    @IBAction private func didTapReplace(_ sender: UIButton) {
+        self.delegate?.detailViewControllerDidTapReplace(self)
+    }
+    
     @IBAction private func didTapFinish(_ sender: UIButton) {
         self.delegate?.detailViewControllerDidTapFinish(self)
     }
-    
+
 }

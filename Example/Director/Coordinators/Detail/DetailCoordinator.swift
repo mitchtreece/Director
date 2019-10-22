@@ -58,6 +58,14 @@ extension DetailCoordinator: DetailViewControllerDelegate {
         start(child: ModalCoordinator())
     }
     
+    func detailViewControllerDidTapChildCoordinator(_ viewController: DetailViewController) {
+        start(child: DetailCoordinator())
+    }
+    
+    func detailViewControllerDidTapReplace(_ viewController: DetailViewController) {
+        replace(with: DetailCoordinator())
+    }
+    
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController) {
         self.sceneCoordinator.finishToRoot(animated: true)
     }
