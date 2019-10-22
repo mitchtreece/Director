@@ -453,21 +453,12 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         else if let nav = coordinator.rootViewController.navigationController, nav == self.navigationController {
             
             guard let idx = nav.viewControllers.firstIndex(of: coordinator.rootViewController) else { return }
-            
-//            let destinationViewController = nav.viewControllers[idx - 1]
-//
-//            nav.popToViewController(
-//                destinationViewController,
-//                animated: true,
-//                completion: { _ in
-//                    completion?()
-//                })
 
-            var vcs = nav.viewControllers
-            vcs.remove(at: idx)
+            var viewControllers = nav.viewControllers
+            viewControllers.remove(at: idx)
             
             nav.setViewControllers(
-                vcs,
+                viewControllers,
                 animated: true,
                 completion: {
                     completion?()
