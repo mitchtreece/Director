@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'Director'
-  s.version          = '1.0.5'
+  s.version          = '1.0.6'
   s.summary          = 'Lightweight Swift coordinator library.'
 
   s.description      = <<-DESC
