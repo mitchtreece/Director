@@ -322,9 +322,15 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         }
         
         let currentViewControllers = self.navigationController.viewControllers
+        var rootOrFirstChildViewController = self.rootViewController!
+        
+        if let nav = rootOrFirstChildViewController as? UINavigationController,
+            let firstChildViewController = nav.viewControllers.first {
+            rootOrFirstChildViewController = firstChildViewController
+        }
         
         guard let rootViewControllerArrayIndex = currentViewControllers
-            .firstIndex(of: self.rootViewController) else { return }
+            .firstIndex(of: rootOrFirstChildViewController) else { return }
         
         // Assuming receiving coordinator is top-most.
         // This might not be the case as the end index might
