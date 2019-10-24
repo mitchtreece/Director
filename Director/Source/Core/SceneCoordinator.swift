@@ -96,12 +96,13 @@ open class SceneCoordinator: AnyCoordinator {
         guard let viewController = UIViewController.root(in: coordinator.build()) else {
             fatalError("SceneCoordinator failed to load replacement coordinator's root view controller")
         }
-        
-        debugLog("\(self.typeString) -(replace)-> \(self.rootCoordinator.typeString) -(with)-> \(coordinator.typeString)")
-        
+                
         coordinator.parentCoordinator = self
         coordinator.navigationController = self.navigationController
+        coordinator.rootViewController = viewController
         self.rootCoordinator = coordinator
+        
+        debugLog("\(self.typeString) -(replace)-> \(self.rootCoordinator.typeString) -(with)-> \(coordinator.typeString)")
         
         guard animated else {
             
