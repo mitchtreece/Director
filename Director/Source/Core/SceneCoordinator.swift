@@ -110,6 +110,8 @@ open class SceneCoordinator: AnyCoordinator {
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
             self.rootCoordinator.didStart()
             
+            completion?()
+            
             return
             
         }
@@ -119,19 +121,23 @@ open class SceneCoordinator: AnyCoordinator {
             
             self.navigationController.delegate = transitioningNavDelegate
             
-            self.navigationController.pushViewController(viewController, animated: true, completion: {
-                self.navigationController.setViewControllers([viewController], animated: false)
+            // TODO: Find a way for setViewControllers to use transitionDelegate
+            
+            self.navigationController.setViewControllers([viewController], animated: true, completion: {
+                
                 self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+                self.rootCoordinator.didStart()
+                completion?()
+                
             })
-            
-            self.rootCoordinator.didStart()
-            
+                    
         }
         else {
             
             self.navigationController.setViewControllers([viewController], animated: true)
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
             self.rootCoordinator.didStart()
+            completion?()
             
         }
         
@@ -147,6 +153,7 @@ open class SceneCoordinator: AnyCoordinator {
             
             self.navigationController.setViewControllers([viewController], animated: false)
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+            
             completion?()
             
             return
@@ -158,8 +165,9 @@ open class SceneCoordinator: AnyCoordinator {
             
             self.navigationController.delegate = transitioningNavDelegate
             
-            self.navigationController.pushViewController(viewController, animated: true, completion: {
-                self.navigationController.setViewControllers([viewController], animated: false)
+            // TODO: Find a way for setViewControllers to use transitionDelegate
+            
+            self.navigationController.setViewControllers([viewController], animated: true, completion: {
                 self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
                 completion?()
             })
