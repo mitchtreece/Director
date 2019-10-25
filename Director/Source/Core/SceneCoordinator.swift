@@ -92,14 +92,16 @@ open class SceneCoordinator: AnyCoordinator {
     }
     
     internal func replaceRoot(with coordinator: ViewCoordinator, animated: Bool, completion: (()->())?) {
+                
+        let coordinatorRootViewController = coordinator.build()
         
-        guard let viewController = UIViewController.root(in: coordinator.build()) else {
+        guard let viewController = UIViewController.root(in: coordinatorRootViewController) else {
             fatalError("SceneCoordinator failed to load replacement coordinator's root view controller")
         }
                 
         coordinator.parentCoordinator = self
         coordinator.navigationController = self.navigationController
-        coordinator.rootViewController = viewController
+        coordinator.rootViewController = coordinatorRootViewController
         self.rootCoordinator = coordinator
         
         debugLog("\(self.typeString) -(replace)-> \(self.rootCoordinator.typeString) -(with)-> \(coordinator.typeString)")
