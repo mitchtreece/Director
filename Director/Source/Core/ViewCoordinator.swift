@@ -393,10 +393,8 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
         parent.remove(
             child: self,
-            completion: {
-                self.didFinish()
-                completion?()
-            })
+            completion: completion
+        )
         
     }
     
@@ -444,6 +442,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         self.navigationController.delegate = self.presentationDelegate
         
         guard !fromNavigationPop else {
+            coordinator.didFinish()
             completion?()
             return
         }
@@ -452,8 +451,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
                         
             nav.dismiss(
                 animated: true,
-                completion: completion
-            )
+                completion: {
+                    coordinator.didFinish()
+                    completion?()
+                })
             
         }
         else if let nav = coordinator.rootViewController.navigationController, nav == self.navigationController {
@@ -467,6 +468,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
                 viewControllers,
                 animated: true,
                 completion: {
+                    coordinator.didFinish()
                     completion?()
                 })
             
