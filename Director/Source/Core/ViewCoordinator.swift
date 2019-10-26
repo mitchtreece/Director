@@ -147,7 +147,14 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter animated: Flag indicating if the view coordinator should be started with an animation; _defaults to true_.
     /// - Parameter completion: Optional completion handler to call after the child view coordinator has been started; _defaults to nil_.
     public final func start(child coordinator: ViewCoordinator, animated: Bool = true, completion: (()->())? = nil) {
-        _start(child: coordinator, animated: animated, embedded: false, completion: completion)
+        
+        _start(
+            child: coordinator,
+            animated: animated,
+            embedded: false,
+            completion: completion
+        )
+        
     }
     
     /// Starts an embedded child view coordinator.
@@ -157,7 +164,14 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     ///
     /// - Parameter coordinator: The child view coordinator.
     public final func startEmbedded(child coordinator: ViewCoordinator) {
-        _start(child: coordinator, animated: false, embedded: true, completion: nil)
+        
+        _start(
+            child: coordinator,
+            animated: false,
+            embedded: true,
+            completion: nil
+        )
+        
     }
     
     /// Starts a collection of embedded child view coordinators.
@@ -167,10 +181,24 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     ///
     /// - Parameter children: The child view coordinators.
     public final func startEmbedded(children: [ViewCoordinator]) {
-        children.forEach { self._start(child: $0, animated: false, embedded: true, completion: nil) }
+        
+        children.forEach {
+            
+            self._start(
+                child: $0,
+                animated: false,
+                embedded: true,
+                completion: nil
+            )
+            
+        }
+        
     }
     
-    private func _start(child coordinator: ViewCoordinator, animated: Bool, embedded: Bool, completion: (()->())?) {
+    private func _start(child coordinator: ViewCoordinator,
+                        animated: Bool,
+                        embedded: Bool,
+                        completion: (()->())?) {
         
         guard !coordinator.isStarted else { return }
         coordinator.isStarted = true
@@ -219,7 +247,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             // presenting modally and it's nav controller is it's own
             
             coordinator.navigationController = nav
-            
+                        
             UIViewController.active(in: self.navigationController)?.present(
                 nav,
                 animated: animated,
@@ -299,7 +327,27 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             debugLog("\(parentViewCoordinator.typeString) -(replace)-> \(self.typeString), -(with)-> \(coordinator.typeString)")
             
             coordinator.parentCoordinator = self.parentCoordinator
-            (self.parentCoordinator as! ViewCoordinator).start(
+            
+            if self.isModal {
+                
+                self._finish(
+                    animated: animated,
+                    replacement: true,
+                    completion: {
+                    
+                        parentViewCoordinator.start(
+                            child: coordinator,
+                            animated: animated,
+                            completion: completion
+                        )
+                    
+                })
+                
+                return
+                
+            }
+            
+            parentViewCoordinator.start(
                 child: coordinator,
                 animated: animated,
                 completion: {
@@ -374,15 +422,25 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
-    /// Removes the view coordinator from its parent's coordinator stack,
-    /// & dismisses it the same way it was presented.
+    /// Removes the view coordinator from its parent's coordinator stack.
+    /// - Parameter animated: Flag indicating if the view coordinator should be finished with an animation; _defaults to true_.
+    /// - Parameter completion: An optional completion handler to call after the view coordinator finishes; _defaults to nil_.
     ///
     /// If the view coordinator is embedded, it will still be removed from its parent's coordinator stack,
     /// but it **will not** be dismissed. An embedded view coordinator manages its own presentation & dismissal.
     ///
-    /// - Parameter completion: An optional completion handler to call after the view coordinator finishes; _defaults to nil_.
-    public final func finish(completion: (()->())? = nil) {
+    public final func finish(animated: Bool = true, completion: (()->())? = nil) {
         
+        _finish(
+            animated: animated,
+            replacement: false,
+            completion: completion
+        )
+        
+    }
+    
+    private func _finish(animated: Bool, replacement: Bool, completion: (()->())?) {
+     
         guard !self.isEmbedded else { return }
         guard !self.isFinished else { return }
         
@@ -393,6 +451,8 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
         parent.remove(
             child: self,
+            animated: animated,
+            replacement: replacement,
             completion: completion
         )
         
@@ -409,8 +469,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     }
     
     private func remove(child coordinator: ViewCoordinator,
-                        fromNavigationPop: Bool = false,
-                        forReplacement: Bool = false,
+                        animated: Bool,
+                        navPop: Bool = false,
+                        replacement: Bool = false,
                         completion: (()->())? = nil) {
         
         guard !coordinator.isFinished else { return }
@@ -435,13 +496,34 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         self.children.remove(at: index)
         
         // Dismiss if needed
+
+        if replacement {
+            
+            if coordinator.isModal {
+                
+                // NOTE: Weird glitch if animated is `false` here when presenting
+                // an iOS 13 style modal card (i.e. pageSheet, formSheet).
+                // Seems like a system bug.
+                
+                coordinator.rootViewController.dismiss(
+                    animated: animated,
+                    completion: {
+                        coordinator.didFinish()
+                        completion?()
+                    })
+                
+            }
+            else {
+                return
+            }
+            
+        }
         
-        guard !forReplacement else { return }
         guard !coordinator.isEmbedded else { return }
         
         self.navigationController.delegate = self.presentationDelegate
         
-        guard !fromNavigationPop else {
+        guard !navPop else {
             coordinator.didFinish()
             completion?()
             return
@@ -450,7 +532,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         if let nav = coordinator.rootViewController as? UINavigationController {
                         
             nav.dismiss(
-                animated: true,
+                animated: animated,
                 completion: {
                     coordinator.didFinish()
                     completion?()
@@ -466,7 +548,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             
             nav.setViewControllers(
                 viewControllers,
-                animated: true,
+                animated: animated,
                 completion: {
                     coordinator.didFinish()
                     completion?()
@@ -481,23 +563,31 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         guard !self.isFinished else { return }
         
         self.children.forEach { $0.removeForParentReplacement() }
-        
+            
         (self.parentCoordinator as? ViewCoordinator)?.remove(
             child: self,
-            forReplacement: true
+            animated: false,
+            replacement: true,
+            completion: nil
         )
         
     }
     
     internal func removeForModalDismiss(child coordinator: ViewCoordinator) {
-        remove(child: coordinator)
+        
+        remove(
+            child: coordinator,
+            animated: false
+        )
+        
     }
     
     internal func removeForNavigationPop(child coordinator: ViewCoordinator) {
         
         remove(
             child: coordinator,
-            fromNavigationPop: true
+            animated: false,
+            navPop: true
         )
         
     }

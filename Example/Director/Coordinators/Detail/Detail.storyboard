@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lCx-ER-dti">
-                                <rect key="frame" x="20" y="602" width="374" height="260"/>
+                                <rect key="frame" x="20" y="548" width="374" height="314"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bPw-gh-bOK">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -101,6 +101,23 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="didTapFinish:" destination="3Bw-8t-T9j" eventType="touchUpInside" id="KWg-9o-5KS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pur-yH-F9K">
+                                        <rect key="frame" x="0.0" y="270" width="374" height="44"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="OUL-iU-SH9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <state key="normal" title="Finish All"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didTapFinishAll:" destination="3Bw-8t-T9j" eventType="touchUpInside" id="WQb-dY-5of"/>
                                         </connections>
                                     </button>
                                 </subviews>

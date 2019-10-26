@@ -9,11 +9,19 @@
 import UIKit
 
 protocol ModalViewControllerDelegate: class {
+    func modalViewControllerDidTapReplace(_ viewController: ModalViewController)
+    func modalViewControllerDidTapFinish(_ viewController: ModalViewController)
+    func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController)
     func modalViewControllerDidTapDone(_ viewController: ModalViewController)
 }
 
 class ModalViewController: UIViewController {
     
+    @IBOutlet private weak var replaceButton: UIButton!
+    @IBOutlet private weak var finishButton: UIButton!
+    @IBOutlet private weak var finishAllButton: UIButton!
+
+    private var isReplaceEnabled: Bool = true
     private weak var delegate: ModalViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -28,9 +36,35 @@ class ModalViewController: UIViewController {
         
     }
     
-    func setup(delegate: ModalViewControllerDelegate) -> Self {
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.view.backgroundColor = self.isReplaceEnabled ? .white : .red
+        
+        self.replaceButton.isHidden = !self.isReplaceEnabled
+        self.finishButton.isHidden = !self.isReplaceEnabled || (self.delegate == nil)
+        self.finishAllButton.isHidden = !self.isReplaceEnabled || (self.delegate == nil)
+
+    }
+    
+    func setup(replace: Bool, delegate: ModalViewControllerDelegate?) -> Self {
+        
+        self.isReplaceEnabled = replace
         self.delegate = delegate
         return self
+        
+    }
+    
+    @IBAction private func didTapReplace(_ sender: UIButton) {
+        self.delegate?.modalViewControllerDidTapReplace(self)
+    }
+    
+    @IBAction private func didTapFinish(_ sender: UIButton) {
+        self.delegate?.modalViewControllerDidTapFinish(self)
+    }
+    
+    @IBAction private func didTapFinishToRoot(_ sender: UIButton) {
+        self.delegate?.modalViewControllerDidTapFinishToRoot(self)
     }
     
     @objc private func didTapDone(_ sender: UIBarButtonItem) {

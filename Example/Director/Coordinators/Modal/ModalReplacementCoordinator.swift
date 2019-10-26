@@ -1,5 +1,5 @@
 //
-//  ModalCoordinator.swift
+//  ModalReplacementCoordinator.swift
 //  Director_Example
 //
 //  Created by Mitch Treece on 6/9/19.
@@ -9,13 +9,13 @@
 import UIKit
 import Director
 
-class ModalCoordinator: ViewCoordinator {
+class ModalReplacementCoordinator: ViewCoordinator {
 
     override func build() -> UIViewController {
         
         let vc = (UIStoryboard(name: "Modal", bundle: nil)
             .instantiateViewController(withIdentifier: "ModalViewController") as! ModalViewController)
-            .setup(replace: true, delegate: self)
+            .setup(replace: false, delegate: self)
         
         let nav = UINavigationController(rootViewController: vc)
         
@@ -29,18 +29,18 @@ class ModalCoordinator: ViewCoordinator {
     
 }
 
-extension ModalCoordinator: ModalViewControllerDelegate {
-    
-    func modalViewControllerDidTapReplace(_ viewController: ModalViewController) {
-        replace(with: ModalReplacementCoordinator())
-    }
+extension ModalReplacementCoordinator: ModalViewControllerDelegate {
     
     func modalViewControllerDidTapFinish(_ viewController: ModalViewController) {
-        finish()
+        //
     }
     
     func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController) {
-        self.sceneCoordinator.finishToRoot()
+        //
+    }
+    
+    func modalViewControllerDidTapReplace(_ viewController: ModalViewController) {
+        //
     }
     
     func modalViewControllerDidTapDone(_ viewController: ModalViewController) {

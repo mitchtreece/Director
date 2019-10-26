@@ -15,6 +15,7 @@ protocol DetailViewControllerDelegate: class {
     func detailViewControllerDidTapChildCoordinator(_ viewController: DetailViewController)
     func detailViewControllerDidTapReplace(_ viewController: DetailViewController)
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController)
+    func detailViewControllerDidTapFinishToRoot(_ viewController: DetailViewController)
 }
 
 class DetailViewController: UIViewController {
@@ -67,6 +68,10 @@ class DetailViewController: UIViewController {
     
     @IBAction private func didTapFinish(_ sender: UIButton) {
         self.delegate?.detailViewControllerDidTapFinish(self)
+    }
+    
+    @IBAction private func didTapFinishAll(_ sender: UIButton) {
+        self.delegate?.detailViewControllerDidTapFinishToRoot(self)
     }
 
 }

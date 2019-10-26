@@ -43,7 +43,10 @@ extension DetailCoordinator: DetailViewControllerDelegate {
     
     func detailViewControllerDidTapModalPresentation(_ viewController: DetailViewController) {
         
-        let vc = UIStoryboard(name: "Modal", bundle: nil).instantiateViewController(withIdentifier: "ModalViewController")
+        let vc = (UIStoryboard(name: "Modal", bundle: nil)
+            .instantiateViewController(withIdentifier: "ModalViewController") as! ModalViewController)
+            .setup(replace: false, delegate: nil)
+        
         let nav = UINavigationController(rootViewController: vc)
 
         nav.modalPresentationStyle = Settings.shared.cardPresentation ?
@@ -67,7 +70,11 @@ extension DetailCoordinator: DetailViewControllerDelegate {
     }
     
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController) {
-        self.sceneCoordinator.finishToRoot(animated: true)
+        finish()
+    }
+    
+    func detailViewControllerDidTapFinishToRoot(_ viewController: DetailViewController) {
+        self.sceneCoordinator.finishToRoot()
     }
     
 }

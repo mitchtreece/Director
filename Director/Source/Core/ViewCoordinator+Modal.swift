@@ -9,6 +9,13 @@ import UIKit
 
 public extension ViewCoordinator /* Modal */ {
     
+    /// Flag indicating if the view coordinator presents it's root view controller modally.
+    ///
+    /// This will always return `false` until the view coordinator has been started.
+    var isModal: Bool {
+        return (self.rootViewController is UINavigationController)
+    }
+    
     /// Presents a view controller modally from the view coordinator's navigation controller.
     /// - Parameter viewController: The view controller to present.
     /// - Parameter animated: Flag indicating if the presentation should be performed with an animation; _defaults to true_.
