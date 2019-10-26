@@ -38,16 +38,14 @@ class ModalViewController: UIViewController {
             target: self,
             action: #selector(didTapDone(_:))
         )
-        
-        self.navigationItem.rightBarButtonItem = self.doneBarButtonItem
-        
+                
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         
-        self.doneBarButtonItem.isEnabled = self.isModal
+        self.navigationItem.rightBarButtonItem = self.isModal ? self.doneBarButtonItem : nil
         self.replaceButton.isHidden = self.isModal
         self.finishButton.isHidden = self.isModal
         self.finishAllButton.isHidden = self.isModal

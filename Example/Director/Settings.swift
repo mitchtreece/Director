@@ -13,6 +13,8 @@ class Settings {
     static let shared = Settings()
     
     var cardPresentation: Bool = true
+    var startAnimated: Bool = true
+    var finishAnimated: Bool = true
     
     private init() {
         //

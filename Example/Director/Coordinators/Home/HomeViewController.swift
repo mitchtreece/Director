@@ -18,8 +18,15 @@ protocol HomeViewControllerDelegate: class {
 class HomeViewController: UIViewController {
     
     @IBOutlet private weak var settingsLabel: UILabel!
+    
     @IBOutlet private weak var modalCardsContentView: UIView!
     @IBOutlet private weak var modalCardsSwitch: UISwitch!
+    
+    @IBOutlet private weak var startAnimatedContentView: UIView!
+    @IBOutlet private weak var startAnimatedSwitch: UISwitch!
+    
+    @IBOutlet private weak var finishAnimatedContentView: UIView!
+    @IBOutlet private weak var finishAnimatedSwitch: UISwitch!
     
     private weak var delegate: HomeViewControllerDelegate?
     
@@ -40,6 +47,18 @@ class HomeViewController: UIViewController {
             for: .valueChanged
         )
         
+        self.startAnimatedSwitch.addTarget(
+            self,
+            action: #selector(startAnimatedSwitchValueChanged(_:)),
+            for: .valueChanged
+        )
+        
+        self.finishAnimatedSwitch.addTarget(
+            self,
+            action: #selector(finishAnimatedSwitchValueChanged(_:)),
+            for: .valueChanged
+        )
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +75,14 @@ class HomeViewController: UIViewController {
     
     @objc private func modalCardsSwitchValueChanged(_ sender: UISwitch) {
         Settings.shared.cardPresentation = sender.isOn
+    }
+    
+    @objc private func startAnimatedSwitchValueChanged(_ sender: UISwitch) {
+        Settings.shared.startAnimated = sender.isOn
+    }
+    
+    @objc private func finishAnimatedSwitchValueChanged(_ sender: UISwitch) {
+        Settings.shared.finishAnimated = sender.isOn
     }
     
     @objc private func didTapSwiftUI(_ sender: UIBarButtonItem) {

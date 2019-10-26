@@ -58,11 +58,21 @@ extension DetailCoordinator: DetailViewControllerDelegate {
     }
     
     func detailViewControllerDidTapModalCoordinator(_ viewController: DetailViewController) {
-        start(child: ModalCoordinator())
+        
+        start(
+            child: ModalCoordinator(),
+            animated: Settings.shared.startAnimated
+        )
+        
     }
     
     func detailViewControllerDidTapChildCoordinator(_ viewController: DetailViewController) {
-        start(child: DetailCoordinator())
+        
+        start(
+            child: DetailCoordinator(),
+            animated: Settings.shared.startAnimated
+        )
+        
     }
     
     func detailViewControllerDidTapReplace(_ viewController: DetailViewController) {
@@ -70,11 +80,11 @@ extension DetailCoordinator: DetailViewControllerDelegate {
     }
     
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController) {
-        finish()
+        finish(animated: Settings.shared.finishAnimated)
     }
     
     func detailViewControllerDidTapFinishToRoot(_ viewController: DetailViewController) {
-        self.sceneCoordinator.finishToRoot()
+        self.sceneCoordinator.finishToRoot(animated: Settings.shared.finishAnimated)
     }
     
 }

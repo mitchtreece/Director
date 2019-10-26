@@ -36,23 +36,28 @@ extension ModalCoordinator: ModalViewControllerDelegate {
     }
     
     func modalViewControllerDidTapFinish(_ viewController: ModalViewController) {
-        finish()
+        finish(animated: Settings.shared.finishAnimated)
     }
     
     func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController) {
-        self.sceneCoordinator.finishToRoot()
+        self.sceneCoordinator.finishToRoot(animated: Settings.shared.finishAnimated)
     }
     
     func modalViewControllerDidTapFinishToRootAndStartChild(_ viewController: ModalViewController) {
 
-        self.sceneCoordinator.finishToRoot(animated: true, completion: { sceneCoordinator in
-            sceneCoordinator.rootCoordinator.start(child: ModalReplacementCoordinator())
-        })
+        self.sceneCoordinator.finishToRoot(
+            animated: Settings.shared.finishAnimated,
+            completion: { sceneCoordinator in
+                sceneCoordinator.rootCoordinator.start(
+                    child: ModalReplacementCoordinator(),
+                    animated: Settings.shared.startAnimated
+                )
+            })
         
     }
     
     func modalViewControllerDidTapDone(_ viewController: ModalViewController) {
-        finish()
+        finish(animated: Settings.shared.finishAnimated)
     }
     
 }

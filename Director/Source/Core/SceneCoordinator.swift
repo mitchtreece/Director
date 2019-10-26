@@ -109,17 +109,40 @@ open class SceneCoordinator: AnyCoordinator {
 
         guard animated else {
             
-            self.navigationController.setViewControllers([replacementRootViewController], animated: false)
-            
-            if rootContainsChildModals {
-                self.rootCoordinator.navigationController.dismiss(animated: false)
+            DispatchQueue.main.async {
+                
+                // If performing without an animation, we need to force our replacement
+                // logic to be executed immediatey (by throwing it onto the main thread).
+                //
+                // Because the completion handler is called immediately, starting child
+                // modal view coordinators from within the handler can fail to present
+                // the view coordinator's `rootViewController` in certain situations.
+                //
+                // This happens because the view hierarchy still reflects the dirty state
+                // when the handler is called.
+                //
+                // i.e. `coordinator.navigationController.presentedViewController` still
+                // might contain the previous (now dismissed) view controller.
+                
+                self.navigationController.setViewControllers([replacementRootViewController], animated: false)
+                
+                if rootContainsChildModals {
+                    
+                    // NOTE: Weird glitch when dismissing an iOS 13 modal card (pageSheet)
+                    // without an animation. Seems like a UIKit bug.
+                    
+                    self.rootCoordinator.navigationController.dismiss(animated: false)
+                    
+                }
+                
+                self.rootCoordinator = coordinator
+                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+                self.rootCoordinator.didStart()
+                
+                completion?()
+                
             }
             
-            self.rootCoordinator = coordinator
-            self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            self.rootCoordinator.didStart()
-            
-            completion?()
             return
             
         }
@@ -168,15 +191,38 @@ open class SceneCoordinator: AnyCoordinator {
         
         guard animated else {
             
-            self.navigationController.popToRootViewController(animated: false)
-            self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
+            DispatchQueue.main.async {
+                
+                // If performing without an animation, we need to force our replacement
+                // logic to be executed immediatey (by throwing it onto the main thread).
+                //
+                // Because the completion handler is called immediately, starting child
+                // modal view coordinators from within the handler can fail to present
+                // the view coordinator's `rootViewController` in certain situations.
+                //
+                // This happens because the view hierarchy still reflects the dirty state
+                // when the handler is called.
+                //
+                // i.e. `coordinator.navigationController.presentedViewController` still
+                // might contain the previous (now dismissed) view controller.
+                
+                self.navigationController.popToRootViewController(animated: false)
+                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+                self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
 
-            if containsChildModals {
-                self.rootCoordinator.navigationController.dismiss(animated: false)
+                if containsChildModals {
+                    
+                    // NOTE: Weird glitch when dismissing an iOS 13 modal card (pageSheet)
+                    // without an animation. Seems like a UIKit bug.
+                    
+                    self.rootCoordinator.navigationController.dismiss(animated: false)
+                    
+                }
+                            
+                completion?(self)
+                
             }
-                        
-            completion?(self)
+
             return
             
         }
