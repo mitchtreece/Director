@@ -15,7 +15,7 @@ class ModalCoordinator: ViewCoordinator {
         
         let vc = (UIStoryboard(name: "Modal", bundle: nil)
             .instantiateViewController(withIdentifier: "ModalViewController") as! ModalViewController)
-            .setup(replace: true, delegate: self)
+            .setup(color: .systemBackground, delegate: self)
         
         let nav = UINavigationController(rootViewController: vc)
         
@@ -41,6 +41,14 @@ extension ModalCoordinator: ModalViewControllerDelegate {
     
     func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController) {
         self.sceneCoordinator.finishToRoot()
+    }
+    
+    func modalViewControllerDidTapFinishToRootAndStartChild(_ viewController: ModalViewController) {
+                
+        self.sceneCoordinator.finishToRoot(animated: true, completion: { sceneCoordinator in
+            sceneCoordinator.topCoordinator.start(child: ModalReplacementCoordinator())
+        })
+        
     }
     
     func modalViewControllerDidTapDone(_ viewController: ModalViewController) {

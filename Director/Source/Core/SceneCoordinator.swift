@@ -62,7 +62,7 @@ open class SceneCoordinator: AnyCoordinator {
     ///
     /// - Parameter animated: Flag indicating if this should be done with an animation; _defaults to true_.
     /// - Parameter completion: An optional completion handler to call after all child view coordinators are removed; _defaults to nil_.
-    public final func finishToRoot(animated: Bool = true, completion: (()->())? = nil) {
+    public final func finishToRoot(animated: Bool = true, completion: ((SceneCoordinator)->())? = nil) {
         
         replaceRootWithRoot(
             animated: animated,
@@ -92,94 +92,122 @@ open class SceneCoordinator: AnyCoordinator {
     }
     
     internal func replaceRoot(with coordinator: ViewCoordinator, animated: Bool, completion: (()->())?) {
-                
-        let coordinatorRootViewController = coordinator.build()
-        
-        guard let viewController = UIViewController.root(in: coordinatorRootViewController) else {
-            fatalError("SceneCoordinator failed to load replacement coordinator's root view controller")
+            
+        let rootContainsChildModals = self.rootCoordinator.containsChildModals
+        let replacementRootViewController = coordinator.build()
+
+        guard !(replacementRootViewController is UINavigationController) else {
+            fatalError("Cannot replace root coordinator with a modal coordinator (UINavigationController)")
         }
+        
+        debugLog("\(self.typeString) -(replace)-> \(self.rootCoordinator.typeString) -(with)-> \(coordinator.typeString)")
+        self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
                 
         coordinator.parentCoordinator = self
         coordinator.navigationController = self.navigationController
-        coordinator.rootViewController = coordinatorRootViewController
-        self.rootCoordinator = coordinator
-        
-        debugLog("\(self.typeString) -(replace)-> \(self.rootCoordinator.typeString) -(with)-> \(coordinator.typeString)")
-        
+        coordinator.rootViewController = replacementRootViewController
+
         guard animated else {
             
-            self.navigationController.setViewControllers([viewController], animated: false)
+            self.navigationController.setViewControllers([replacementRootViewController], animated: false)
+            
+            if rootContainsChildModals {
+                self.rootCoordinator.navigationController.dismiss(animated: false)
+            }
+            
+            self.rootCoordinator = coordinator
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
             self.rootCoordinator.didStart()
             
             completion?()
-            
             return
             
         }
-        
-        if let transitioningDelegate = viewController.transitioningDelegate,
-            let transitioningNavDelegate = transitioningDelegate as? UINavigationControllerDelegate {
-            
-            self.navigationController.delegate = transitioningNavDelegate
-            
-            // TODO: Find a way for setViewControllers to use transitionDelegate
-            
-            self.navigationController.setViewControllers([viewController], animated: true, completion: {
                 
+        if let transitioningDelegate = replacementRootViewController.transitioningDelegate,
+            let transitioningNavDelegate = transitioningDelegate as? UINavigationControllerDelegate {
+            self.navigationController.delegate = transitioningNavDelegate
+        }
+        
+        // TODO: Find a way for setViewControllers to use transitionDelegate
+        
+        let animateNavigation = rootContainsChildModals ? false : animated
+
+        self.navigationController.setViewControllers([replacementRootViewController], animated: animateNavigation, completion: {
+            
+            if !rootContainsChildModals {
+                
+                self.rootCoordinator = coordinator
+                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+                self.rootCoordinator.didStart()
+                completion?()
+                
+            }
+            
+        })
+        
+        if rootContainsChildModals {
+            
+            self.rootCoordinator.navigationController.dismiss(animated: true, completion: {
+                
+                self.rootCoordinator = coordinator
                 self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
                 self.rootCoordinator.didStart()
                 completion?()
                 
             })
-                    
-        }
-        else {
-            
-            self.navigationController.setViewControllers([viewController], animated: true)
-            self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            self.rootCoordinator.didStart()
-            completion?()
             
         }
         
     }
     
-    internal func replaceRootWithRoot(animated: Bool, completion: (()->())?) {
-        
-        self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
+    internal func replaceRootWithRoot(animated: Bool, completion: ((SceneCoordinator)->())?) {
         
         let viewController = self.rootCoordinator.rootViewController!
+        let containsChildModals = self.rootCoordinator.containsChildModals
         
         guard animated else {
             
-            self.navigationController.setViewControllers([viewController], animated: false)
+            self.navigationController.popToRootViewController(animated: false)
             self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-            
-            completion?()
-            
+            self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
+
+            if containsChildModals {
+                self.rootCoordinator.navigationController.dismiss(animated: false)
+            }
+                        
+            completion?(self)
             return
             
         }
-        
+                
         if let transitioningDelegate = viewController.transitioningDelegate,
             let transitioningNavDelegate = transitioningDelegate as? UINavigationControllerDelegate {
-            
             self.navigationController.delegate = transitioningNavDelegate
-            
-            // TODO: Find a way for setViewControllers to use transitionDelegate
-            
-            self.navigationController.setViewControllers([viewController], animated: true, completion: {
-                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-                completion?()
-            })
-            
         }
-        else {
-
-            self.navigationController.setViewControllers([viewController], animated: true, completion: {
+        
+        let animateNavigation = containsChildModals ? false : animated
+            
+        self.navigationController.popToRootViewController(animated: animateNavigation, completion: { _ in
+            
+            if !containsChildModals {
+                
                 self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
-                completion?()
+                self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
+                completion?(self)
+                
+            }
+            
+        })
+        
+        if containsChildModals {
+            
+            self.rootCoordinator.navigationController.dismiss(animated: true, completion: {
+                
+                self.rootCoordinator.navigationController.delegate = self.rootCoordinator.presentationDelegate
+                self.rootCoordinator.children.forEach { $0.removeForParentReplacement() }
+                completion?(self)
+                
             })
             
         }

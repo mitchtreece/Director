@@ -560,16 +560,32 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     
     internal func removeForParentReplacement() {
         
+//        guard !self.isFinished else { return }
+//
+//        self.children.forEach { $0.removeForParentReplacement() }
+//
+//        (self.parentCoordinator as? ViewCoordinator)?.remove(
+//            child: self,
+//            animated: false,
+//            replacement: true,
+//            completion: nil
+//        )
+                
         guard !self.isFinished else { return }
+        guard let parentViewCoordinator = self.parentCoordinator as? ViewCoordinator else { return }
+        guard let idx = parentViewCoordinator.children.firstIndex(where: { $0 === self }) else { return }
+                
+        // Remove children
         
         self.children.forEach { $0.removeForParentReplacement() }
-            
-        (self.parentCoordinator as? ViewCoordinator)?.remove(
-            child: self,
-            animated: false,
-            replacement: true,
-            completion: nil
-        )
+        self.children.removeAll()
+        
+        // Reomve self
+        
+        debugLog("\(parentViewCoordinator.typeString) -(remove)-> \(self.typeString)")
+        parentViewCoordinator.children.remove(at: idx)
+        self.isFinished = true
+        didFinish()
         
     }
     

@@ -32,4 +32,39 @@ public extension ViewCoordinator /* Modal */ {
         
     }
     
+    // MARK: Private
+    
+    internal var containsChildModals: Bool {
+        
+        guard !self.children.isEmpty else { return false }
+        
+        for child in self.children {
+            
+            if childIsOrContainsModals(child) {
+                return true
+            }
+            
+        }
+        
+        return false
+        
+    }
+    
+    private func childIsOrContainsModals(_ child: ViewCoordinator) -> Bool {
+     
+        guard !child.isModal else { return true }
+        guard !child.children.isEmpty else { return false }
+        
+        for subChild in child.children {
+            
+            if child.childIsOrContainsModals(subChild) {
+                return true
+            }
+            
+        }
+        
+        return false
+        
+    }
+    
 }

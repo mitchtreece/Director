@@ -42,7 +42,7 @@
                                             <constraint firstAttribute="height" constant="44" id="Jtk-b0-aWW"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="Modal Coordinator"/>
+                                        <state key="normal" title="Modal Child"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="6"/>
@@ -59,7 +59,7 @@
                                             <constraint firstAttribute="height" constant="44" id="iTH-Gc-W68"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="Child Coordinator"/>
+                                        <state key="normal" title="Push Child"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="6"/>
@@ -110,7 +110,7 @@
                                             <constraint firstAttribute="height" constant="44" id="OUL-iU-SH9"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="Finish All"/>
+                                        <state key="normal" title="Finish to Root"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="6"/>

@@ -12,6 +12,8 @@ protocol ModalViewControllerDelegate: class {
     func modalViewControllerDidTapReplace(_ viewController: ModalViewController)
     func modalViewControllerDidTapFinish(_ viewController: ModalViewController)
     func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController)
+    func modalViewControllerDidTapFinishToRootAndStartChild(_ viewController: ModalViewController)
+
     func modalViewControllerDidTapDone(_ viewController: ModalViewController)
 }
 
@@ -20,36 +22,43 @@ class ModalViewController: UIViewController {
     @IBOutlet private weak var replaceButton: UIButton!
     @IBOutlet private weak var finishButton: UIButton!
     @IBOutlet private weak var finishAllButton: UIButton!
+    @IBOutlet private weak var finishAllAndStartButton: UIButton!
 
-    private var isReplaceEnabled: Bool = true
+    private var doneBarButtonItem: UIBarButtonItem!
+    private var isModal: Bool = false
+    
     private weak var delegate: ModalViewControllerDelegate?
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+        self.doneBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done,
             target: self,
             action: #selector(didTapDone(_:))
         )
+        
+        self.navigationItem.rightBarButtonItem = self.doneBarButtonItem
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        self.view.backgroundColor = self.isReplaceEnabled ? .white : .red
         
-        self.replaceButton.isHidden = !self.isReplaceEnabled
-        self.finishButton.isHidden = !self.isReplaceEnabled || (self.delegate == nil)
-        self.finishAllButton.isHidden = !self.isReplaceEnabled || (self.delegate == nil)
-
+        self.doneBarButtonItem.isEnabled = self.isModal
+        self.replaceButton.isHidden = self.isModal
+        self.finishButton.isHidden = self.isModal
+        self.finishAllButton.isHidden = self.isModal
+        self.finishAllAndStartButton.isHidden = self.isModal
+        
     }
     
-    func setup(replace: Bool, delegate: ModalViewControllerDelegate?) -> Self {
+    func setup(color: UIColor, modal: Bool = false, delegate: ModalViewControllerDelegate?) -> Self {
         
-        self.isReplaceEnabled = replace
+        self.view.backgroundColor = color
+        self.isModal = modal
         self.delegate = delegate
         return self
         
@@ -65,6 +74,10 @@ class ModalViewController: UIViewController {
     
     @IBAction private func didTapFinishToRoot(_ sender: UIButton) {
         self.delegate?.modalViewControllerDidTapFinishToRoot(self)
+    }
+    
+    @IBAction private func didTapFinishToRootAndStartChild(_ sender: UIButton) {
+        self.delegate?.modalViewControllerDidTapFinishToRootAndStartChild(self)
     }
     
     @objc private func didTapDone(_ sender: UIBarButtonItem) {

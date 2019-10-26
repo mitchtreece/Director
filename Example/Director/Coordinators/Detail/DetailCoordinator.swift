@@ -45,7 +45,7 @@ extension DetailCoordinator: DetailViewControllerDelegate {
         
         let vc = (UIStoryboard(name: "Modal", bundle: nil)
             .instantiateViewController(withIdentifier: "ModalViewController") as! ModalViewController)
-            .setup(replace: false, delegate: nil)
+            .setup(color: .white, modal: true, delegate: nil)
         
         let nav = UINavigationController(rootViewController: vc)
 
