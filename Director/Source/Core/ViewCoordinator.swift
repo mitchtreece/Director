@@ -248,7 +248,23 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             
             coordinator.navigationController = nav
                         
-            UIViewController.active(in: self.navigationController)?.present(
+//            UIViewController.active(in: self.navigationController)?.present(
+//                nav,
+//                animated: animated,
+//                completion: {
+//                    completion?()
+//                    coordinator.didStart()
+//                })
+            
+//            UIViewController.topModal(in: self.navigationController)?.present(
+//                nav,
+//                animated: animated,
+//                completion: {
+//                    completion?()
+//                    coordinator.didStart()
+//                })
+            
+            self.navigationController.present(
                 nav,
                 animated: animated,
                 completion: {

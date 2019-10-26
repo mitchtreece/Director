@@ -25,6 +25,16 @@ internal extension UIViewController /* Active */ {
         
     }
     
+    static func topModal(in base: UIViewController?) -> UIViewController? {
+        
+        if let presented = base?.presentedViewController {
+            return topModal(in: presented)
+        }
+        
+        return base
+        
+    }
+    
     static func root(in base: UIViewController?) -> UIViewController? {
         
         if let nav = base as? UINavigationController {

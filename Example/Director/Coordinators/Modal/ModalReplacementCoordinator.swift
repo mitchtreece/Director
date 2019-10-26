@@ -42,7 +42,7 @@ extension ModalReplacementCoordinator: ModalViewControllerDelegate {
     func modalViewControllerDidTapFinishToRootAndStartChild(_ viewController: ModalViewController) {
         
         self.sceneCoordinator.finishToRoot(animated: true, completion: { sceneCoordinator in
-            sceneCoordinator.topCoordinator.start(child: ModalReplacementCoordinator())
+            sceneCoordinator.rootCoordinator.start(child: ModalReplacementCoordinator())
         })
         
     }
