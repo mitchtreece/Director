@@ -408,8 +408,19 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             contentsOf: viewControllers,
             at: startIndex
         )
+        
+        if let rootNav = self.rootViewController as? UINavigationController,
+            self.navigationController == rootNav {
+            
+            // This is a modal view coordinator (it's root view controller
+            // is a `UINavigationController`). The root view controller
+            // should stay the same.
+            
+        }
+        else {
+            self.rootViewController = viewControllers.first!
+        }
                 
-        self.rootViewController = viewControllers.first!
         self.presentationDelegate.isEnabled = false
         
         self.navigationController.setViewControllers(
