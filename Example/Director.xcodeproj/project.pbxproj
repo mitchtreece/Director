@@ -31,6 +31,7 @@
 		263988DF22AADF640042404A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 263988DE22AADF640042404A /* Home.storyboard */; };
 		263988E122AADF720042404A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263988E022AADF720042404A /* HomeViewController.swift */; };
 		26E10C062363BDA700F8D616 /* ModalReplacementCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E10C052363BDA700F8D616 /* ModalReplacementCoordinator.swift */; };
+		26E10C082363EAB200F8D616 /* ExampleTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E10C072363EAB200F8D616 /* ExampleTransitionDelegate.swift */; };
 		5A1AA2BD05329BE76CA7106E /* Pods_Director_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61FC69639536735DCB7DD4CE /* Pods_Director_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -75,6 +76,7 @@
 		263988DE22AADF640042404A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		263988E022AADF720042404A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		26E10C052363BDA700F8D616 /* ModalReplacementCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalReplacementCoordinator.swift; sourceTree = "<group>"; };
+		26E10C072363EAB200F8D616 /* ExampleTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTransitionDelegate.swift; sourceTree = "<group>"; };
 		3467312A79DCC52909154FD7 /* Director.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Director.podspec; path = ../Director.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4281BA35E0DCAE6529F026AA /* Pods-Director_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Director_Example.debug.xcconfig"; path = "Target Support Files/Pods-Director_Example/Pods-Director_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4F00103842FDA8A95CE58A40 /* Pods-Director_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Director_Example.release.xcconfig"; path = "Target Support Files/Pods-Director_Example/Pods-Director_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				263988D622AA39F40042404A /* SceneDelegate.swift */,
 				2630348B22AF594E008F7E52 /* Settings.swift */,
+				26E10C072363EAB200F8D616 /* ExampleTransitionDelegate.swift */,
 				263988DA22AADE270042404A /* Coordinators */,
 				2635914822AF5176009FB59A /* Helpers */,
 				263988E222AAEE160042404A /* Resources */,
@@ -473,6 +476,7 @@
 				2622898722AC6248003E98BE /* DetailViewController.swift in Sources */,
 				263988E122AADF720042404A /* HomeViewController.swift in Sources */,
 				2633E3E922AE0B1D00D02E95 /* ModalViewController.swift in Sources */,
+				26E10C082363EAB200F8D616 /* ExampleTransitionDelegate.swift in Sources */,
 				2622898522AC623E003E98BE /* DetailCoordinator.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				2630349122B09386008F7E52 /* EmbeddedCoordinator.swift in Sources */,

@@ -48,6 +48,21 @@ internal extension UINavigationController {
         }
         
     }
+    
+    func popToRootViewController(animated: Bool, completion: @escaping ([UIViewController]?)->()) {
+        
+        let poppedViewControllers = popToRootViewController(animated: animated)
+
+        if let coordinator = self.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { _ in
+                completion(poppedViewControllers)
+            }
+        }
+        else {
+            completion(poppedViewControllers)
+        }
+        
+    }
 
     func setViewControllers(_ viewControllers: [UIViewController],
                             animated: Bool,

@@ -11,17 +11,17 @@ import Director
 
 class ModalReplacementCoordinator: ViewCoordinator {
 
+    private let transition = ExampleTransitionDelegate()
+    
     override func build() -> UIViewController {
         
         let vc = (UIStoryboard(name: "Modal", bundle: nil)
             .instantiateViewController(withIdentifier: "ModalViewController") as! ModalViewController)
-            .setup(replace: false, delegate: self)
+            .setup(color: .systemGreen, delegate: self)
         
         let nav = UINavigationController(rootViewController: vc)
-        
-        nav.modalPresentationStyle = Settings.shared.cardPresentation ?
-            .automatic :
-            .fullScreen
+        nav.modalPresentationStyle = .fullScreen
+        nav.transitioningDelegate = self.transition
         
         return nav
         
@@ -32,19 +32,32 @@ class ModalReplacementCoordinator: ViewCoordinator {
 extension ModalReplacementCoordinator: ModalViewControllerDelegate {
     
     func modalViewControllerDidTapFinish(_ viewController: ModalViewController) {
-        //
+        finish(animated: Settings.shared.finishAnimated)
     }
     
     func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController) {
-        //
+        self.sceneCoordinator.finishToRoot(animated: Settings.shared.finishAnimated)
+    }
+    
+    func modalViewControllerDidTapFinishToRootAndStartChild(_ viewController: ModalViewController) {
+        
+        self.sceneCoordinator.finishToRoot(
+            animated: Settings.shared.finishAnimated,
+            completion: { sceneCoordinator in
+                sceneCoordinator.rootCoordinator.start(
+                    child: ModalReplacementCoordinator(),
+                    animated: Settings.shared.startAnimated
+                )
+            })
+        
     }
     
     func modalViewControllerDidTapReplace(_ viewController: ModalViewController) {
-        //
+        replace(with: ModalReplacementCoordinator())
     }
     
     func modalViewControllerDidTapDone(_ viewController: ModalViewController) {
-        finish()
+        finish(animated: Settings.shared.finishAnimated)
     }
     
 }

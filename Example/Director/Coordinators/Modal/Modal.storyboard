@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="t3H-24-haA">
-                                <rect key="frame" x="20" y="710" width="374" height="152"/>
+                                <rect key="frame" x="20" y="656" width="374" height="206"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MHT-1J-9gR">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -25,7 +25,7 @@
                                             <constraint firstAttribute="height" constant="44" id="Vlp-pz-ORT"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="Replace"/>
+                                        <state key="normal" title="Replace Coordinator"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="6"/>
@@ -42,7 +42,7 @@
                                             <constraint firstAttribute="height" constant="44" id="ZbH-ZI-79m"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="Finish"/>
+                                        <state key="normal" title="Finish Coordinator"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="6"/>
@@ -59,7 +59,7 @@
                                             <constraint firstAttribute="height" constant="44" id="1Sg-80-zyI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                        <state key="normal" title="Finish All"/>
+                                        <state key="normal" title="Finish to Root Coordinator"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="6"/>
@@ -67,6 +67,23 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="didTapFinishToRoot:" destination="LaD-rj-uqc" eventType="touchUpInside" id="Z7N-mk-LO0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7sv-VI-FeB">
+                                        <rect key="frame" x="0.0" y="162" width="374" height="44"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="yvR-Od-aH6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <state key="normal" title="Finish to Root &amp; Start Child"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didTapFinishToRootAndStartChild:" destination="LaD-rj-uqc" eventType="touchUpInside" id="6uJ-mP-MY4"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -82,6 +99,7 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="finishAllAndStartButton" destination="7sv-VI-FeB" id="I8p-vL-Iq5"/>
                         <outlet property="finishAllButton" destination="hYq-zA-BFk" id="Yla-3w-N0m"/>
                         <outlet property="finishButton" destination="HEc-Aq-H6g" id="CAb-Ij-7Ay"/>
                         <outlet property="replaceButton" destination="MHT-1J-9gR" id="LBn-vV-iB9"/>

@@ -28,15 +28,30 @@ extension HomeCoordinator: HomeViewControllerDelegate {
     }
     
     func homeViewControllerDidTapDetail(_ viewController: HomeViewController) {
-        start(child: DetailCoordinator())
+        
+        start(
+            child: DetailCoordinator(),
+            animated: Settings.shared.startAnimated
+        )
+        
     }
     
     func homeViewControllerDidTapModalCoordinator(_ viewController: HomeViewController) {
-        start(child: ModalCoordinator())
+        
+        start(
+            child: ModalCoordinator(),
+            animated: Settings.shared.startAnimated
+        )
+        
     }
     
     func homeViewControllerDidTapEmbeddedCoordinator(_ viewController: HomeViewController) {
-        start(child: EmbeddedCoordinator())
+        
+        start(
+            child: EmbeddedCoordinator(),
+            animated: Settings.shared.startAnimated
+        )
+        
     }
     
 }

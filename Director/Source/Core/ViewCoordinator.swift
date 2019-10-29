@@ -247,8 +247,8 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             // presenting modally and it's nav controller is it's own
             
             coordinator.navigationController = nav
-                        
-            UIViewController.active(in: self.navigationController)?.present(
+            
+            self.navigationController.present(
                 nav,
                 animated: animated,
                 completion: {
@@ -323,10 +323,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         else {
             
             let parentViewCoordinator = parent as! ViewCoordinator
+            coordinator.parentCoordinator = parent
             
             debugLog("\(parentViewCoordinator.typeString) -(replace)-> \(self.typeString), -(with)-> \(coordinator.typeString)")
-            
-            coordinator.parentCoordinator = self.parentCoordinator
             
             if self.isModal {
                 
@@ -409,8 +408,19 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             contentsOf: viewControllers,
             at: startIndex
         )
+        
+        if let rootNav = self.rootViewController as? UINavigationController,
+            self.navigationController == rootNav {
+            
+            // This is a modal view coordinator (it's root view controller
+            // is a `UINavigationController`). The root view controller
+            // should stay the same.
+            
+        }
+        else {
+            self.rootViewController = viewControllers.first!
+        }
                 
-        self.rootViewController = viewControllers.first!
         self.presentationDelegate.isEnabled = false
         
         self.navigationController.setViewControllers(
@@ -452,6 +462,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         parent.remove(
             child: self,
             animated: animated,
+            navPop: false,
             replacement: replacement,
             completion: completion
         )
@@ -470,9 +481,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     
     private func remove(child coordinator: ViewCoordinator,
                         animated: Bool,
-                        navPop: Bool = false,
-                        replacement: Bool = false,
-                        completion: (()->())? = nil) {
+                        navPop: Bool,
+                        replacement: Bool,
+                        completion: (()->())?) {
         
         guard !coordinator.isFinished else { return }
         guard let index = self.children.firstIndex(where: { $0 === coordinator }) else { return }
@@ -501,9 +512,8 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             
             if coordinator.isModal {
                 
-                // NOTE: Weird glitch if animated is `false` here when presenting
-                // an iOS 13 style modal card (i.e. pageSheet, formSheet).
-                // Seems like a system bug.
+                // NOTE: Weird glitch when dismissing an iOS 13 modal card (pageSheet)
+                // without an animation. Seems like a UIKit bug.
                 
                 coordinator.rootViewController.dismiss(
                     animated: animated,
@@ -530,6 +540,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         }
         
         if let nav = coordinator.rootViewController as? UINavigationController {
+            
+            // NOTE: Weird glitch when dismissing an iOS 13 modal card (pageSheet)
+            // without an animation. Seems like a UIKit bug.
                         
             nav.dismiss(
                 animated: animated,
@@ -559,17 +572,22 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     }
     
     internal func removeForParentReplacement() {
-        
+                
         guard !self.isFinished else { return }
+        guard let parentViewCoordinator = self.parentCoordinator as? ViewCoordinator else { return }
+        guard let idx = parentViewCoordinator.children.firstIndex(where: { $0 === self }) else { return }
+                
+        // Remove children
         
         self.children.forEach { $0.removeForParentReplacement() }
-            
-        (self.parentCoordinator as? ViewCoordinator)?.remove(
-            child: self,
-            animated: false,
-            replacement: true,
-            completion: nil
-        )
+        self.children.removeAll()
+        
+        // Reomve self
+        
+        debugLog("\(parentViewCoordinator.typeString) -(remove)-> \(self.typeString)")
+        parentViewCoordinator.children.remove(at: idx)
+        self.isFinished = true
+        didFinish()
         
     }
     
@@ -577,7 +595,10 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
         remove(
             child: coordinator,
-            animated: false
+            animated: false,
+            navPop: false,
+            replacement: false,
+            completion: nil
         )
         
     }
@@ -587,7 +608,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         remove(
             child: coordinator,
             animated: false,
-            navPop: true
+            navPop: true,
+            replacement: false,
+            completion: nil
         )
         
     }
