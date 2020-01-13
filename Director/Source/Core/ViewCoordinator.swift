@@ -82,14 +82,14 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     internal var presentationDelegate: ViewCoordinatorPresentationDelegate!
     internal private(set) var children = [ViewCoordinator]()
     
-    /// Flag indicating if the view coordinator is embedded in a parent view coordinator.
-    private(set) var isEmbedded: Bool = false
-    
     /// Flag indicating if the view coordinator has been started.
-    private(set) var isStarted: Bool = false
+    public private(set) var isStarted: Bool = false
     
     /// Flag indicating if the view coordinator has been finished.
     public internal(set) var isFinished: Bool = false
+    
+    /// Flag indicating if the view coordinator is embedded in a parent view coordinator.
+    public private(set) var isEmbedded: Bool = false
     
     // MARK: Public
     
