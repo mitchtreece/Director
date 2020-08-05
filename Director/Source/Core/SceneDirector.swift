@@ -77,7 +77,9 @@ public final class SceneDirector {
     /// - Parameter coordinator: The scene director's root scene coordinator.
     /// - Parameter window: The scene director's managed window.
     /// - Parameter debug: Flag indicating if debug logging is enabled; _defaults to false_.
-    public init(_ coordinator: SceneCoordinator, window: UIWindow, debug: Bool = false) {
+    public init(_ coordinator: SceneCoordinator,
+                window: UIWindow,
+                debug: Bool = false) {
         
         self.isDebugEnabled = debug
         

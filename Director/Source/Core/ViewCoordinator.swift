@@ -146,7 +146,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter: coordinator: The child view coordinator.
     /// - Parameter animated: Flag indicating if the view coordinator should be started with an animation; _defaults to true_.
     /// - Parameter completion: Optional completion handler to call after the child view coordinator has been started; _defaults to nil_.
-    public final func start(child coordinator: ViewCoordinator, animated: Bool = true, completion: (()->())? = nil) {
+    public final func start(child coordinator: ViewCoordinator,
+                            animated: Bool = true,
+                            completion: (()->())? = nil) {
         
         _start(
             child: coordinator,
@@ -304,7 +306,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter coordinator: The replacement view coordinator.
     /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
     /// - Parameter completion: Optional completion handler to call after the replacement has finished; _defaults to nil_.
-    public final func replace(with coordinator: ViewCoordinator, animated: Bool = true, completion: (()->())? = nil) {
+    public final func replace(with coordinator: ViewCoordinator,
+                              animated: Bool = true,
+                              completion: (()->())? = nil) {
         
         guard !self.isEmbedded else { return }
         guard let parent = self.parentCoordinator else { return }
@@ -361,7 +365,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter viewControllers: The replacement view controllers.
     /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
     /// - Parameter completion: An optional completion handler to call after the replacement has finished; _defaults to nil_.
-    public final func replaceChildViewControllers(with viewControllers: [UIViewController], animated: Bool = true, completion: (()->())? = nil) {
+    public final func replaceChildViewControllers(with viewControllers: [UIViewController],
+                                                  animated: Bool = true,
+                                                  completion: (()->())? = nil) {
      
         guard !viewControllers.isEmpty else {
             debugLog("Cannot replace a view coordinator's managed child view controllers with an empty set; skipping.")
@@ -428,6 +434,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
             animated: animated,
             completion: {
                 self.presentationDelegate.isEnabled = true
+                completion?()
             })
         
     }
@@ -449,7 +456,9 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
-    private func _finish(animated: Bool, replacement: Bool, completion: (()->())?) {
+    private func _finish(animated: Bool,
+                         replacement: Bool,
+                         completion: (()->())?) {
      
         guard !self.isEmbedded else { return }
         guard !self.isFinished else { return }

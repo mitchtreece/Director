@@ -91,7 +91,9 @@ open class SceneCoordinator: AnyCoordinator {
         
     }
     
-    internal func replaceRoot(with coordinator: ViewCoordinator, animated: Bool, completion: (()->())?) {
+    internal func replaceRoot(with coordinator: ViewCoordinator,
+                              animated: Bool,
+                              completion: (()->())?) {
             
         let rootContainsChildModals = self.rootCoordinator.containsChildModals
         let replacementRootViewController = coordinator.build()
