@@ -75,10 +75,12 @@ internal extension UINavigationController {
         
         if let coordinator = self.transitionCoordinator {
             coordinator.animate(alongsideTransition: nil) { _ in
+                self.viewControllers = viewControllers
                 completion()
             }
         }
         else {
+            self.viewControllers = viewControllers
             completion()
         }
         
