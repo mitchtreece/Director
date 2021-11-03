@@ -40,6 +40,26 @@ internal class ViewCoordinatorPresentationDelegate: NSObject, UINavigationContro
         // Grab source view controller and make sure it was popped
         
         guard let sourceViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else { return }
+        
+        guard sourceViewController != navigationController else {
+            
+            // This delegate function gets called whenever
+            // UIViewController's `viewDidAppear(animated:)` is called.
+            //
+            // Because of how we're determining if this was a pop
+            // operation, when swiping-to-dismiss iOS 13 modal cards, the
+            // `transitionCoordinator` will return the nav controller
+            // as the "from" vc, & the nav controller's current child as
+            // the "to" vc.
+            //
+            // We only want to do stuff here if it's an actual
+            // navigation pop operation, which in the above
+            // scenario, it isn't.
+            
+            return
+            
+        }
+        
         guard !navigationController.viewControllers.contains(sourceViewController) else { return }
         
         if sourceViewController != coordinator.rootViewController {
