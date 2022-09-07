@@ -7,12 +7,12 @@
 
 import UIKit
 
-internal extension UINavigationController {
+public extension UINavigationController {
     
     func pushViewController(_ viewController: UIViewController,
                             animated: Bool,
                             completion: (()->())?) {
-        
+
         pushViewController(
             viewController,
             animated: animated
@@ -29,44 +29,61 @@ internal extension UINavigationController {
         
     }
     
+    func popViewController(animated: Bool,
+                           completion: (()->())?) {
+        
+        popViewController(animated: true)
+        
+        if let coordinator = self.transitionCoordinator {
+            coordinator.animate(alongsideTransition: nil) { _ in
+                completion?()
+            }
+        }
+        else {
+            completion?()
+        }
+        
+    }
+    
     func popToViewController(_ viewController: UIViewController,
                              animated: Bool,
-                             completion: @escaping ([UIViewController]?)->()) {
+                             completion: (()->())?) {
         
-        let poppedViewControllers = popToViewController(
+        popToViewController(
             viewController,
             animated: animated
         )
 
         if let coordinator = self.transitionCoordinator {
             coordinator.animate(alongsideTransition: nil) { _ in
-                completion(poppedViewControllers)
+                completion?()
             }
         }
         else {
-            completion(poppedViewControllers)
+            completion?()
         }
         
     }
     
-    func popToRootViewController(animated: Bool, completion: @escaping ([UIViewController]?)->()) {
+    func popToRootViewController(animated: Bool,
+                                 completion: (()->())?) {
         
-        let poppedViewControllers = popToRootViewController(animated: animated)
+        popToRootViewController(animated: animated)
 
         if let coordinator = self.transitionCoordinator {
             coordinator.animate(alongsideTransition: nil) { _ in
-                completion(poppedViewControllers)
+                completion?()
             }
         }
         else {
-            completion(poppedViewControllers)
+            completion?()
         }
         
     }
 
     func setViewControllers(_ viewControllers: [UIViewController],
                             animated: Bool,
-                            completion: @escaping ()->()) {
+                            completion: (()->())?) {
         
         setViewControllers(
             viewControllers,
@@ -76,12 +93,12 @@ internal extension UINavigationController {
         if let coordinator = self.transitionCoordinator {
             coordinator.animate(alongsideTransition: nil) { _ in
                 self.viewControllers = viewControllers
-                completion()
+                completion?()
             }
         }
         else {
             self.viewControllers = viewControllers
-            completion()
+            completion?()
         }
         
     }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-protocol SwiftHomeViewDelegate: class {
+protocol SwiftHomeViewDelegate: AnyObject {
     func swiftHomeViewDidTapUIKit(_ view: SwiftHomeView)
 }
 

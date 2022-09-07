@@ -236,7 +236,7 @@ open class SceneCoordinator: AnyCoordinator {
         
         let animateNavigation = containsChildModals ? false : animated
             
-        self.navigationController.popToRootViewController(animated: animateNavigation, completion: { _ in
+        self.navigationController.popToRootViewController(animated: animateNavigation, completion: {
             
             if !containsChildModals {
                 

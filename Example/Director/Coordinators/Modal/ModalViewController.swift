@@ -8,13 +8,15 @@
 
 import UIKit
 
-protocol ModalViewControllerDelegate: class {
+protocol ModalViewControllerDelegate: AnyObject {
+    
     func modalViewControllerDidTapReplace(_ viewController: ModalViewController)
     func modalViewControllerDidTapFinish(_ viewController: ModalViewController)
     func modalViewControllerDidTapFinishToRoot(_ viewController: ModalViewController)
     func modalViewControllerDidTapFinishToRootAndStartChild(_ viewController: ModalViewController)
 
     func modalViewControllerDidTapDone(_ viewController: ModalViewController)
+    
 }
 
 class ModalViewController: UIViewController {

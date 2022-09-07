@@ -8,10 +8,12 @@
 
 import UIKit
 
-protocol EmbeddedChildViewControllerDelegate: class {
+protocol EmbeddedChildViewControllerDelegate: AnyObject {
+    
     func embeddedChildViewControllerDidTapPush(_ viewController: EmbeddedChildViewController)
     func embeddedChildViewControllerDidTapModal(_ viewController: EmbeddedChildViewController)
     func embeddedChildViewControllerDidTapDone(_ viewController: EmbeddedChildViewController)
+    
 }
 
 class EmbeddedChildViewController: UIViewController {

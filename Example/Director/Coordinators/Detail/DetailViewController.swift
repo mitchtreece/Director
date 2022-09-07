@@ -8,7 +8,8 @@
 
 import UIKit
 
-protocol DetailViewControllerDelegate: class {
+protocol DetailViewControllerDelegate: AnyObject {
+    
     func detailViewControllerDidTapPush(_ viewController: DetailViewController)
     func detailViewControllerDidTapModalPresentation(_ viewController: DetailViewController)
     func detailViewControllerDidTapModalCoordinator(_ viewController: DetailViewController)
@@ -16,6 +17,7 @@ protocol DetailViewControllerDelegate: class {
     func detailViewControllerDidTapReplace(_ viewController: DetailViewController)
     func detailViewControllerDidTapFinish(_ viewController: DetailViewController)
     func detailViewControllerDidTapFinishToRoot(_ viewController: DetailViewController)
+    
 }
 
 class DetailViewController: UIViewController {

@@ -8,11 +8,13 @@
 
 import UIKit
 
-protocol HomeViewControllerDelegate: class {
+protocol HomeViewControllerDelegate: AnyObject {
+    
     func homeViewControllerDidTapSwiftUI(_ viewController: HomeViewController)
     func homeViewControllerDidTapDetail(_ viewController: HomeViewController)
     func homeViewControllerDidTapModalCoordinator(_ viewController: HomeViewController)
     func homeViewControllerDidTapEmbeddedCoordinator(_ viewController: HomeViewController)
+    
 }
 
 class HomeViewController: UIViewController {
