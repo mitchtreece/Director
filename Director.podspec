@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = 'Director'
-  s.version          = '1.0.6'
+  s.version          = '1.1.0'
   s.summary          = 'Lightweight Swift coordinator library.'
 
   s.description      = <<-DESC
@@ -16,30 +16,31 @@ Pod::Spec.new do |s|
   s.social_media_url        = 'https://twitter.com/mitchtreece'
 
   s.swift_version           = '5'
-  s.ios.deployment_target   = '11.0'
+  s.ios.deployment_target   = '13.0'
 
   # Subspecs
 
   s.default_subspec = 'Core'
 
-  s.subspec 'Core' do |core|
+  s.subspec 'Core' do |ss|
 
-      core.source_files       = 'Director/Source/Core/**/*'
-
-  end
-
-  s.subspec 'DI' do |di|
-
-      di.source_files       = 'Director/Source/DI/**/*'
-      di.dependency         'Director/Core'
-      di.dependency         'Swinject', '~> 2.7.0'
+    ss.source_files = 'Director/Source/Core/**/*'
 
   end
 
-  s.subspec 'All' do |all|
+  s.subspec 'DI' do |ss|
 
-      all.dependency        'Director/Core'
-      all.dependency        'Director/DI'
+      ss.source_files = 'Director/Source/DI/**/*'
+
+      ss.dependency   'Director/Core'
+      ss.dependency   'Swinject', '~> 2.0'
+
+  end
+
+  s.subspec 'All' do |ss|
+
+      ss.dependency 'Director/Core'
+      ss.dependency 'Director/DI'
 
   end
 

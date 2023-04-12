@@ -1,18 +1,18 @@
 PODS:
-  - Director/All (1.0.1):
+  - Director/All (1.1.0):
     - Director/Core
     - Director/DI
-  - Director/Core (1.0.1)
-  - Director/DI (1.0.1):
+  - Director/Core (1.1.0)
+  - Director/DI (1.1.0):
     - Director/Core
-    - Swinject (~> 2.6.0)
-  - Swinject (2.6.2)
+    - Swinject (~> 2.8.3)
+  - Swinject (2.8.3)
 
 DEPENDENCIES:
   - Director/All (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Swinject
 
 EXTERNAL SOURCES:
@@ -20,9 +20,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Director: 8408993c17aa4912da3d48eb4cb7a67832cd5f86
-  Swinject: cf7458774b1b00323080a9c67e47a1ee7f9d2af1
+  Director: cc8884ce81e283aae2f8a26b5c1c3ca14a8a1e52
+  Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
 
-PODFILE CHECKSUM: 5c9f0bc8a86a93bb91c2c565ef0e1ad25a7043f4
+PODFILE CHECKSUM: 869cb9716c12d39dbfad5088b8e964896ca0906e
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.12.0
