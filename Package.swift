@@ -5,44 +5,51 @@ import PackageDescription
 let package = Package(
     name: "Director",
     platforms: [.iOS(.v13)],
-    swiftLanguageVersions: [.v5],
-    dependencies: [],
     products: [
 
         .library(
             name: "Director", 
-            targets: ["Core"]
+            targets: ["Director"]
         ),
 
         .library(
             name: "DirectorDI", 
-            targets: ["DI"]
+            targets: ["DirectorDI"]
+        )
+
+    ],
+    dependencies: [
+
+        .package(
+            name: "Swinject",
+            url: "https://github.com/Swinject/Swinject",
+            .upToNextMajor(from: .init(2, 0, 0))
         )
 
     ],
     targets: [
 
         .target(
-            name: "Core",
-            path: "Sources/Core",
-            dependencies: []
+            name: "Director",
+            dependencies: [],
+            path: "Sources/Core"
         ),
 
         .target(
-            name: "DI",
-            path: "Sources/DI",
+            name: "DirectorDI",
             dependencies: [
 
-                .target(name: "Core"),
+                .target(name: "Director"), // Core
 
-                .package(
-                    name: "Swinject",
-                    url: "https://github.com/Swinject/Swinject",
-                    .upToNextMajor(from: .init(2, 0, 0))
+                .product(
+                    name: "Swinject", 
+                    package: "Swinject"
                 )
 
-            ]
+            ],
+            path: "Sources/DI"
         )
 
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
