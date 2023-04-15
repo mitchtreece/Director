@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Home-->
         <scene sceneID="AlR-gJ-ISh">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" title="Home" id="xMq-If-PiS" customClass="HomeViewController" customModule="Director_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" title="Home" id="xMq-If-PiS" customClass="HomeViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="giW-wI-lRD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,7 +26,7 @@
                                             <constraint firstAttribute="height" constant="30" id="plw-24-cy4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylq-wH-bHa">
@@ -33,14 +35,14 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Modal Cards" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lhu-ZN-EGr">
                                                 <rect key="frame" x="14" y="0.0" width="250" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.64313725490196072" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zwt-8f-AQ4">
                                                 <rect key="frame" x="272" y="6.6666666666666856" width="51" height="31"/>
                                             </switch>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstItem="Zwt-8f-AQ4" firstAttribute="centerY" secondItem="Ylq-wH-bHa" secondAttribute="centerY" id="9YM-oh-rcO"/>
                                             <constraint firstAttribute="bottom" secondItem="Lhu-ZN-EGr" secondAttribute="bottom" id="DCA-uv-2Gw"/>
@@ -62,14 +64,14 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Animated" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NiU-a3-hNt">
                                                 <rect key="frame" x="14" y="0.0" width="250" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.64313725490196072" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZcE-TM-WKq">
                                                 <rect key="frame" x="272" y="6.6666666666666856" width="51" height="31"/>
                                             </switch>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstItem="ZcE-TM-WKq" firstAttribute="leading" secondItem="NiU-a3-hNt" secondAttribute="trailing" constant="8" id="Dc2-N3-MTV"/>
                                             <constraint firstItem="ZcE-TM-WKq" firstAttribute="centerY" secondItem="jcH-wI-FfL" secondAttribute="centerY" id="GCM-mZ-X1C"/>
@@ -91,14 +93,14 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finish Animated" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aO0-9j-vSu">
                                                 <rect key="frame" x="14" y="0.0" width="250" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.20000000000000001" green="0.64313725490196072" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EXj-Q3-XBP">
                                                 <rect key="frame" x="272" y="6.6666666666666288" width="51" height="31"/>
                                             </switch>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstItem="EXj-Q3-XBP" firstAttribute="leading" secondItem="aO0-9j-vSu" secondAttribute="trailing" constant="8" id="1r3-vd-wb7"/>
                                             <constraint firstAttribute="bottom" secondItem="aO0-9j-vSu" secondAttribute="bottom" id="Htc-xL-IVz"/>
@@ -120,12 +122,12 @@
                                             <constraint firstAttribute="height" constant="30" id="gJd-HW-WAa"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewy-Wr-IjB">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewy-Wr-IjB">
                                         <rect key="frame" x="0.0" y="242" width="335" height="44"/>
-                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="cB0-rH-3cK"/>
                                         </constraints>
@@ -140,9 +142,9 @@
                                             <action selector="didTapDetailCoordinator:" destination="xMq-If-PiS" eventType="touchUpInside" id="Oax-TZ-0EO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xtm-xf-ZLg">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xtm-xf-ZLg">
                                         <rect key="frame" x="0.0" y="296" width="335" height="44"/>
-                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="UZv-Oi-PmA"/>
                                         </constraints>
@@ -157,9 +159,9 @@
                                             <action selector="didTapModalCoordinator:" destination="xMq-If-PiS" eventType="touchUpInside" id="fG2-iA-Huh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNR-zE-vaK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNR-zE-vaK">
                                         <rect key="frame" x="0.0" y="350" width="335" height="44"/>
-                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="secondarySystemFillColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="HGM-6X-Aag"/>
                                         </constraints>
@@ -177,14 +179,14 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="be2-ka-bQI"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="be2-ka-bQI" firstAttribute="trailing" secondItem="ZQu-k8-0l9" secondAttribute="trailing" constant="20" id="GKE-mA-4gr"/>
                             <constraint firstItem="be2-ka-bQI" firstAttribute="bottom" secondItem="ZQu-k8-0l9" secondAttribute="bottom" id="u3g-4X-Wmz"/>
                             <constraint firstItem="ZQu-k8-0l9" firstAttribute="centerX" secondItem="giW-wI-lRD" secondAttribute="centerX" id="vzn-Nu-E4p"/>
                             <constraint firstItem="ZQu-k8-0l9" firstAttribute="leading" secondItem="be2-ka-bQI" secondAttribute="leading" constant="20" id="yY6-5y-2r3"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="be2-ka-bQI"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -202,4 +204,15 @@
             <point key="canvasLocation" x="-17.39130434782609" y="161.38392857142856"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
