@@ -8,7 +8,6 @@
 import Foundation
 
 /// Protocol describing the base attributes of a coordinator.
-@MainActor
 public protocol AnyCoordinator: AnyObject {}
 
 public extension AnyCoordinator {

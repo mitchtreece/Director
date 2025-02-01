@@ -55,7 +55,6 @@ import UIKit
  }
  ```
  */
-@MainActor
 public final class SceneDirector {
     
     internal private(set) var window: UIWindow
@@ -78,6 +77,7 @@ public final class SceneDirector {
     /// - Parameter coordinator: The scene director's root scene coordinator.
     /// - Parameter window: The scene director's managed window.
     /// - Parameter debug: Flag indicating if debug logging is enabled; _defaults to false_.
+    @MainActor
     public init(_ coordinator: SceneCoordinator,
                 window: UIWindow,
                 debug: Bool = false) {
@@ -100,6 +100,7 @@ public final class SceneDirector {
     
     /// Starts the scene director.
     /// - Returns: This scene director instance.
+    @MainActor
     public final func start() -> Self {
         
         let coordinator = self.sceneCoordinator.buildForDirector()

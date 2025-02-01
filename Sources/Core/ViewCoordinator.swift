@@ -64,7 +64,6 @@ import UIKit
  }
  ```
  */
-@MainActor
 open class ViewCoordinator: AnyCoordinator, Equatable {
     
     nonisolated public static func == (lhs: ViewCoordinator, rhs: ViewCoordinator) -> Bool {
@@ -110,24 +109,28 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// This should **never** be called directly.
     ///
     /// - Returns: A `UIViewController` instance.
+    @MainActor
     open func build() -> UIViewController {
         fatalError("ViewCoordinator must return an initial view controller")
     }
     
     /// Called after the view coordinator has been started & added to it's parent coordinator.
     /// Override this function to perform additional setup if needed.
+    @MainActor
     open func didStart() {
         // Override me
     }
     
     /// Called when the view coordinator's managed navigation controller pops a view controller.
     /// Override this function to perform additional actions if needed.
+    @MainActor
     open func didPopViewController(_ viewController: UIViewController) {
         // Override me
     }
     
     /// Called after the view coordinator has been finished & removed from it's parent coordinator.
     /// Override this function to perform additional cleanup if needed.
+    @MainActor
     open func didFinish() {
         // Override me
     }
@@ -147,6 +150,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter: coordinator: The child view coordinator.
     /// - Parameter animated: Flag indicating if the view coordinator should be started with an animation; _defaults to true_.
     /// - Parameter completion: Optional completion handler to call after the child view coordinator has been started; _defaults to nil_.
+    @MainActor
     public final func start(child coordinator: ViewCoordinator,
                             animated: Bool = true,
                             completion: (()->())? = nil) {
@@ -166,6 +170,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// but it **will not** be presented. Embedded view coordinators manage their own presentation & dismissal.
     ///
     /// - Parameter coordinator: The child view coordinator.
+    @MainActor
     public final func startEmbedded(child coordinator: ViewCoordinator) {
         
         _start(
@@ -183,6 +188,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// but they **will not** be presented. Embedded view coordinators manage their own presentation & dismissal.
     ///
     /// - Parameter children: The child view coordinators.
+    @MainActor
     public final func startEmbedded(children: [ViewCoordinator]) {
         
         children.forEach {
@@ -198,6 +204,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
+    @MainActor
     private func _start(child coordinator: ViewCoordinator,
                         animated: Bool,
                         embedded: Bool,
@@ -307,6 +314,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter coordinator: The replacement view coordinator.
     /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
     /// - Parameter completion: Optional completion handler to call after the replacement has finished; _defaults to nil_.
+    @MainActor
     public final func replace(with coordinator: ViewCoordinator,
                               animated: Bool = true,
                               completion: (()->())? = nil) {
@@ -366,6 +374,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     /// - Parameter viewControllers: The replacement view controllers.
     /// - Parameter animated: Flag indicating if the replacement should be done with an animation; _defaults to true_.
     /// - Parameter completion: An optional completion handler to call after the replacement has finished; _defaults to nil_.
+    @MainActor
     public final func replaceChildViewControllers(with viewControllers: [UIViewController],
                                                   animated: Bool = true,
                                                   completion: (()->())? = nil) {
@@ -446,7 +455,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
     ///
     /// If the view coordinator is embedded, it will still be removed from its parent's coordinator stack,
     /// but it **will not** be dismissed. An embedded view coordinator manages its own presentation & dismissal.
-    ///
+    @MainActor
     public final func finish(animated: Bool = true, completion: (()->())? = nil) {
         
         _finish(
@@ -457,6 +466,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
+    @MainActor
     private func _finish(animated: Bool,
                          replacement: Bool,
                          completion: (()->())?) {
@@ -489,6 +499,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
+    @MainActor
     private func remove(child coordinator: ViewCoordinator,
                         animated: Bool,
                         navPop: Bool,
@@ -581,6 +592,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
+    @MainActor
     internal func removeForParentReplacement() {
                 
         guard !self.isFinished else { return }
@@ -601,6 +613,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
+    @MainActor
     internal func removeForModalDismiss(child coordinator: ViewCoordinator) {
         
         remove(
@@ -613,6 +626,7 @@ open class ViewCoordinator: AnyCoordinator, Equatable {
         
     }
     
+    @MainActor
     internal func removeForNavigationPop(child coordinator: ViewCoordinator) {
         
         remove(

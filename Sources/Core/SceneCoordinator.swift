@@ -20,7 +20,6 @@ import UIKit
  }
  ```
  */
-@MainActor
 open class SceneCoordinator: AnyCoordinator {
     
     internal weak var director: SceneDirector!
@@ -45,9 +44,7 @@ open class SceneCoordinator: AnyCoordinator {
     
     // MARK: Public
     
-    public init() {
-        //
-    }
+    public init() {}
     
     /// Builds the scene coordinator's root view coordinator.
     /// This should be overriden by subclasses to return a custom view coordinator.
@@ -63,6 +60,7 @@ open class SceneCoordinator: AnyCoordinator {
     ///
     /// - Parameter animated: Flag indicating if this should be done with an animation; _defaults to true_.
     /// - Parameter completion: An optional completion handler to call after all child view coordinators are removed; _defaults to nil_.
+    @MainActor
     public final func finishToRoot(animated: Bool = true, completion: ((SceneCoordinator)->())? = nil) {
         
         replaceRootWithRoot(
@@ -92,6 +90,7 @@ open class SceneCoordinator: AnyCoordinator {
         
     }
     
+    @MainActor
     internal func replaceRoot(with coordinator: ViewCoordinator,
                               animated: Bool,
                               completion: (()->())?) {
@@ -187,6 +186,7 @@ open class SceneCoordinator: AnyCoordinator {
         
     }
     
+    @MainActor
     internal func replaceRootWithRoot(animated: Bool, completion: ((SceneCoordinator)->())?) {
         
         let viewController = self.rootCoordinator.rootViewController!

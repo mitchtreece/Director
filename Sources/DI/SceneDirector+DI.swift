@@ -16,6 +16,7 @@ public extension SceneDirector /* DI */ {
      - Parameter resolver: The dependency resolver.
      - Returns: This scene director instance.
      */
+    @MainActor
     final func start(with resolver: Resolver) -> Self {
         DIStorage.shared.resolver = resolver
         return start()
