@@ -20,6 +20,7 @@ import UIKit
  }
  ```
  */
+@MainActor
 open class SceneCoordinator: AnyCoordinator {
     
     internal weak var director: SceneDirector!

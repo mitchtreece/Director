@@ -64,9 +64,10 @@ import UIKit
  }
  ```
  */
+@MainActor
 open class ViewCoordinator: AnyCoordinator, Equatable {
     
-    public static func == (lhs: ViewCoordinator, rhs: ViewCoordinator) -> Bool {
+    nonisolated public static func == (lhs: ViewCoordinator, rhs: ViewCoordinator) -> Bool {
         return lhs === rhs
     }
     

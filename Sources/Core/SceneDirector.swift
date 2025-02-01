@@ -55,6 +55,7 @@ import UIKit
  }
  ```
  */
+@MainActor
 public final class SceneDirector {
     
     internal private(set) var window: UIWindow
